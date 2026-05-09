@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supervision Zabbix + Grafana — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet en classe · 2025</span>
+      <span>BTS SIO SISR</span>
+    </div>
+    <h1>Supervision Zabbix avec dashboards Grafana</h1>
+    <p class="sous-titre">
+      Installation d'une plateforme de supervision pour un parc Linux/Windows avec alertes mail et tableaux de bord Grafana.
+    </p>
+    <div class="techno-pills">
+      <span>Zabbix 6 LTS</span>
+      <span>Grafana</span>
+      <span>SNMP</span>
+      <span>Debian 12</span>
+      <span>Postfix</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture de supervision</h2>
+    <figure>
+      <img src="img/zabbix/architecture.svg" alt="Architecture de supervision Zabbix">
+      <figcaption>Le serveur Zabbix collecte les données des agents et du switch SNMP, alimente Grafana et déclenche des alertes mail</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le contexte</h2>
+    <p>
+      Un parc fictif de cinq machines (deux Windows Server, deux Debian, un switch Cisco) et l'objectif de tout superviser depuis une console unique. Sans supervision on s'aperçoit qu'un service est tombé quand un utilisateur appelle. Avec supervision on le voit avant l'utilisateur, voire avant que ça tombe vraiment.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Choix de Zabbix</h2>
+    <p>
+      J'ai comparé Zabbix avec Centreon et Nagios. Zabbix a gagné parce que :
+    </p>
+    <ul class="puces">
+      <li>Interface web complète et moderne, sans plugins payants</li>
+      <li>Installation simple sur Debian via dépôts officiels</li>
+      <li>Agent disponible nativement pour Windows, Linux, BSD</li>
+      <li>Communauté francophone active</li>
+      <li>Une formation Zabbix figure souvent dans les compétences demandées en alternance</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>La mise en place</h2>
+    <h3>Le serveur Zabbix</h3>
+    <p>
+      Installation sur Debian 12 avec MariaDB, frontend en PHP/Apache. Configuration de Postfix pour l'envoi des alertes par mail vers mon adresse perso (en attendant un vrai serveur SMTP).
+    </p>
+    <h3>Les agents</h3>
+    <p>
+      Sur chaque machine cliente, installation de l'agent Zabbix (paquet pour Debian, MSI pour Windows). Configuration du fichier <code>zabbix_agentd.conf</code> avec l'IP du serveur et un identifiant unique. L'enregistrement passe ensuite côté serveur en <i>autoregistration</i>, pour pas avoir à déclarer chaque machine à la main.
+    </p>
+    <h3>SNMP sur le switch Cisco</h3>
+    <p>
+      Pour les équipements réseau, pas d'agent à installer, on utilise SNMP. J'ai activé SNMP v2c sur le switch (community read-only), puis ajouté l'équipement dans Zabbix avec les templates Cisco. Surveillance automatique des interfaces, du CPU, de la RAM.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Les alertes</h2>
+    <p>
+      Trois niveaux configurés dans Zabbix : information, warning, high. Les warnings et plus sévères déclenchent un mail. Pour éviter les faux positifs au démarrage, j'ai mis des durées d'attente (un warning ne se déclenche que si l'état dure plus d'une minute).
+    </p>
+    <p>
+      Exemples d'alertes mises en place :
+    </p>
+    <ul class="puces">
+      <li>Service Apache, MariaDB, ou SSH down (high)</li>
+      <li>Espace disque {'<'} 15% libre (warning)</li>
+      <li>RAM {'>'} 90% pendant plus de 5 minutes (warning)</li>
+      <li>Charge CPU {'>'} 95% pendant plus de 5 minutes (warning)</li>
+      <li>Temps de réponse ICMP {'>'} 200 ms (info)</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Grafana au-dessus</h2>
+    <p>
+      Zabbix a ses propres dashboards mais ils sont assez austères. J'ai ajouté Grafana avec le plugin Zabbix DataSource pour faire des tableaux de bord plus parlants. Un dashboard "vue globale" qui affiche en temps réel l'état des cinq machines, et un dashboard "tendance" pour les graphes sur 24h / 7 jours / 30 jours.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'ai appris</h2>
+    <p>
+      La supervision c'est pas juste mettre des agents partout, c'est définir ce qui est <i>normal</i> avant. J'ai mis quinze jours à régler les seuils correctement parce qu'au début mes alertes se déclenchaient toutes les nuits pendant les sauvegardes. Une fois que j'ai exclu cette plage horaire, c'est devenu utilisable.
+    </p>
+    <p>
+      Et ne jamais alerter sur du bruit : si chaque alerte est importante, on les lit. Si une sur dix l'est, on les ignore toutes.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Directory pour une PME fictive — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet de seconde année · 2025</span>
+      <span>BTS SIO SISR</span>
+      <span>Nexa Digital School</span>
+    </div>
+    <h1>Active Directory pour une PME fictive</h1>
+    <p class="sous-titre">
+      Mise en place d'une infrastructure Windows Server pour une entreprise fictive de 50 postes, avec deux contrôleurs de domaine, GPO et services réseau.
+    </p>
+    <div class="techno-pills">
+      <span>Windows Server 2022</span>
+      <span>Active Directory</span>
+      <span>GPO</span>
+      <span>DNS</span>
+      <span>DHCP</span>
+      <span>PowerShell</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture</h2>
+    <figure>
+      <img src="img/ad/architecture.svg" alt="Architecture du domaine pme.local">
+      <figcaption>Schéma du domaine : deux contrôleurs, switch central, postes répartis par service</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le contexte</h2>
+    <p>
+      Le sujet du projet de seconde année : monter l'infrastructure Windows complète d'une PME imaginaire d'une cinquantaine de postes, organisée en cinq services (direction, RH, compta, technique, commercial). Chaque service a ses propres besoins en accès et en partages.
+    </p>
+    <p>
+      Travail individuel, sur trois semaines, dans le laboratoire de l'école avec des VMs VMware Workstation.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce qu'il fallait livrer</h2>
+    <ul class="puces">
+      <li>Un domaine Active Directory <code>pme.local</code> opérationnel</li>
+      <li>Deux contrôleurs de domaine (un principal, un secondaire) pour la redondance</li>
+      <li>Un service DHCP fiable, avec réservations pour les imprimantes</li>
+      <li>Un DNS interne intégré à l'AD</li>
+      <li>Une organisation des comptes par OU correspondant aux services</li>
+      <li>Des GPO classiques : verrouillage de session, fond d'écran imposé, lecteurs réseau, déploiement de Firefox et LibreOffice</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Comment je m'y suis pris</h2>
+    <h3>Installation des deux serveurs</h3>
+    <p>
+      Deux VMs Windows Server 2022 Datacenter, <code>SRV-DC01</code> et <code>SRV-DC02</code>, dans le même réseau. Configuration réseau en IP statique, hostname propre, mise à jour Windows Update, puis promotion en contrôleur de domaine pour le premier, et en contrôleur supplémentaire pour le second.
+    </p>
+    <h3>Création des unités d'organisation</h3>
+    <p>
+      Une OU par service, plus une OU "Servers" pour les machines, une "Groupes" pour les groupes de sécurité. J'ai fait une convention de nommage stricte (<code>g_compta_lecture</code>, <code>g_compta_ecriture</code>) pour qu'elle reste lisible quand le parc grandit.
+    </p>
+    <h3>Comptes utilisateurs en masse via PowerShell</h3>
+    <p>
+      Pour gagner du temps, j'ai écrit un script PowerShell qui lit un CSV des utilisateurs (prénom, nom, service) et qui les crée en bloc avec le bon mot de passe initial, dans la bonne OU, et les ajoute aux groupes correspondants. Ça m'a beaucoup servi pour démontrer le projet, où je devais recréer le domaine plusieurs fois.
+    </p>
+    <h3>Les GPO</h3>
+    <p>
+      Six GPO principales, appliquées au niveau du domaine ou des OU concernées : verrouillage de session après 10 minutes, fond d'écran d'entreprise, désactivation du panneau de contrôle pour les non-admins, mappage du lecteur réseau <code>S:\</code> vers le partage du service, déploiement de Firefox via MSI, configuration de l'imprimante par défaut.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'ai appris</h2>
+    <p>
+      C'est le projet qui m'a fait comprendre l'intérêt d'une organisation propre dès le départ. Au début j'ai créé les comptes "à la main" et après quelques utilisateurs c'était le bazar. PowerShell + un CSV bien structuré, et tout devient simple.
+    </p>
+    <p>
+      J'ai aussi vu que tester ses GPO sur une seule machine cobaye avant de les appliquer à toute une OU, c'est une habitude qui sauve des heures. Sur ce projet j'ai cassé deux fois la session de mon utilisateur de test sans pouvoir m'en remettre. Lendemain je rebootais en mode sans échec pour rétablir.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

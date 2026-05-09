@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossier technique E6 — GLPI chez ALCONSEIL</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#e6" class="retour">← Retour à l'épreuve E6</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Dossier technique · Épreuve E6</span>
+      <span>Cybersécurité des services informatiques</span>
+      <span>BTS SIO SISR</span>
+    </div>
+    <h1>Sécurisation de la solution GLPI chez ALCONSEIL</h1>
+    <p class="sous-titre">
+      Comment j'ai protégé un serveur GLPI en alternance : durcissement, gestion des identités, sauvegardes, et continuité de service.
+    </p>
+    <div class="techno-pills">
+      <span>Ubuntu 24.04 LTS</span>
+      <span>Apache 2.4</span>
+      <span>HTTPS / TLS</span>
+      <span>UFW</span>
+      <span>Fail2ban</span>
+      <span>Samba 4 AD</span>
+      <span>LDAP</span>
+      <span>cron + tar + mysqldump</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>Préambule</h2>
+    <p>
+      Mon dossier technique E6 porte sur la sécurisation du serveur GLPI déployé chez ALCONSEIL pendant mon alternance. Le projet GLPI lui-même (le déploiement) est traité en E5. Ici je me concentre sur ce qui relève de la cybersécurité : protéger les données, gérer les identités, durcir le serveur, garantir la disponibilité.
+    </p>
+    <p>
+      Pour chaque compétence du référentiel E6, j'explique la mesure mise en place, comment elle est configurée, et pourquoi.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Vue d'ensemble de la sécurité du serveur</h2>
+    <figure>
+      <img src="img/glpi-033.png" alt="Pile applicative LAMP + GLPI">
+      <figcaption>La pile sécurisée : Apache + HTTPS, MariaDB en local, Fail2ban, UFW</figcaption>
+    </figure>
+    <p>
+      Le serveur GLPI est isolé sur un réseau host-only privé en <code>192.168.56.0/24</code>. Il accède à Internet uniquement pour les mises à jour, via un NAT séparé. L'accès se fait en HTTPS depuis le poste hôte.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2><span class="puce-comp" style="background:#7dc36d"></span>Protéger les données à caractère personnel</h2>
+    <p>
+      GLPI stocke des données sur les utilisateurs (nom, email, identifiant AD), sur le matériel et sur les contrats. Quatre mesures protègent ces données.
+    </p>
+    <h3>Principe du moindre privilège sur MariaDB</h3>
+    <p>
+      L'utilisateur <code>glpiuser</code> n'a de droits que sur la base <code>glpidb</code>. Le compte <code>root</code> MariaDB n'est utilisable qu'en local via socket UNIX, jamais en TCP. Aucun compte distant n'a été créé.
+    </p>
+    <h3>Chiffrement du transit en HTTPS</h3>
+    <p>
+      Apache écoute sur le port 443 avec un certificat auto-signé (Let's Encrypt côté prod). TLS 1.2 et 1.3 uniquement, ciphers modernes. Le port 80 redirige vers 443 via <code>mod_rewrite</code>.
+    </p>
+    <h3>Sauvegardes automatiques quotidiennes</h3>
+    <p>
+      Un script <code>backup_glpi.sh</code> est lancé chaque nuit par cron à 02:00. Il fait un <code>mysqldump</code> de la base <code>glpidb</code>, un <code>tar</code> du dossier <code>/var/www/glpi</code> et copie les deux archives sur un volume séparé. Rotation sur 30 jours.
+    </p>
+    <h3>Conformité RGPD</h3>
+    <p>
+      Les comptes des consultants qui quittent l'entreprise sont désactivés dans GLPI puis archivés selon le délai légal. Les sauvegardes sont également purgées.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2><span class="puce-comp" style="background:#3b6cf0"></span>Préserver l'identité numérique de l'organisation</h2>
+    <p>
+      Plutôt que de créer un compte GLPI séparé pour chaque consultant, on réutilise les comptes Active Directory. Un seul mot de passe à gérer, une seule politique de sécurité, une seule désactivation à la sortie.
+    </p>
+    <h3>Active Directory avec Samba 4</h3>
+    <p>
+      Faute de licence Windows Server, j'ai monté un AD avec Samba 4 en mode AD-DC sur la VM <code>srv-ad</code>. C'est un AD compatible Microsoft, libre, qui parle les mêmes protocoles : LDAP, Kerberos, DNS, SMB. Le domaine est <code>ALCONSEIL.LOCAL</code>.
+    </p>
+    <h3>Authentification LDAP dans GLPI</h3>
+    <figure>
+      <img src="img/glpi-029.png" alt="Configuration LDAP de GLPI">
+      <figcaption>La config LDAP de GLPI : serveur, BaseDN, filtres</figcaption>
+    </figure>
+    <p>
+      GLPI interroge l'AD à chaque connexion sur le port LDAP/389. À terme, je passerai en LDAPS (port 636) pour chiffrer aussi cette communication.
+    </p>
+    <h3>Politique de mots de passe</h3>
+    <ul class="puces">
+      <li>Longueur minimale : 12 caractères</li>
+      <li>Complexité imposée (3 classes sur 4)</li>
+      <li>Renouvellement tous les 90 jours</li>
+      <li>Verrouillage du compte après 5 tentatives échouées</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2><span class="puce-comp" style="background:#e07b7b"></span>Sécuriser les équipements et les usages</h2>
+    <h3>Pare-feu UFW</h3>
+    <p>
+      UFW est configuré en <i>deny by default</i> : tout est bloqué sauf ce qui est explicitement autorisé. Trois ports ouverts uniquement :
+    </p>
+    <ul class="puces">
+      <li><code>22/tcp</code> SSH (limité au sous-réseau host-only)</li>
+      <li><code>80/tcp</code> HTTP (redirige vers HTTPS)</li>
+      <li><code>443/tcp</code> HTTPS</li>
+    </ul>
+    <h3>Fail2ban contre le brute-force</h3>
+    <p>
+      Fail2ban surveille les logs SSH et Apache. Une IP qui tente plus de 5 connexions échouées en 10 minutes est bloquée pendant 1 heure. Les logs sont eux-mêmes envoyés à un script qui m'alerte par mail.
+    </p>
+    <h3>Permissions strictes sur les fichiers</h3>
+    <p>
+      Le code GLPI est dans <code>/var/www/glpi</code> avec propriétaire <code>www-data</code>. Les chemins sensibles <code>config/</code> et <code>files/</code> sont déplacés en dehors de DocumentRoot, comme recommandé officiellement par Teclib'. Permissions <code>750</code> sur les dossiers, <code>640</code> sur les fichiers.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2><span class="puce-comp" style="background:#e8b94a"></span>Disponibilité, intégrité, confidentialité</h2>
+    <h3>Triade DIC appliquée à GLPI</h3>
+    <table class="compa">
+      <thead>
+        <tr><th>Critère</th><th>Mesure mise en place</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Disponibilité</b></td><td>Sauvegardes quotidiennes, monitoring du service Apache, redémarrage auto via systemd</td></tr>
+        <tr><td><b>Intégrité</b></td><td>Hash SHA-256 vérifiés sur les sauvegardes, droits d'écriture limités</td></tr>
+        <tr><td><b>Confidentialité</b></td><td>HTTPS + LDAP, principe du moindre privilège base de données, chemins protégés</td></tr>
+      </tbody>
+    </table>
+    <h3>Test de restauration mensuel</h3>
+    <p>
+      Tous les premiers du mois, je teste la restauration d'une sauvegarde dans une VM de test. Si ça plante, on le sait avant que ce soit nécessaire en vrai. Je documente le résultat dans GLPI lui-même (ticket d'auto-suivi).
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2><span class="puce-comp" style="background:#9b8be0"></span>Cybersécurité de l'infrastructure</h2>
+    <h3>Architecture réseau cloisonnée</h3>
+    <figure>
+      <img src="img/glpi-011.png" alt="Architecture réseau du laboratoire">
+      <figcaption>Le serveur GLPI est isolé sur le réseau host-only privé</figcaption>
+    </figure>
+    <h3>Durcissement Ubuntu</h3>
+    <ul class="puces">
+      <li>Mises à jour automatiques (<code>unattended-upgrades</code>) pour les correctifs de sécurité</li>
+      <li>Désactivation des services non utilisés (<code>cups</code>, <code>avahi</code>)</li>
+      <li>SSH : pas de connexion <code>root</code>, pas de mot de passe, clés uniquement</li>
+      <li>Fuseau horaire et NTP synchronisés</li>
+    </ul>
+    <h3>Sécurisation des chemins GLPI</h3>
+    <p>
+      D'après les recommandations officielles GLPI 10, j'ai déplacé <code>config/</code> et <code>files/</code> en dehors du DocumentRoot Apache. Si quelqu'un trouve une faille dans GLPI, il ne peut pas accéder à la config ni aux fichiers téléversés via une simple requête HTTP.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Bilan</h2>
+    <p>
+      Ce dossier m'a fait passer du déploiement (E5) à la sécurisation réelle d'un service. La différence c'est qu'on ne fait pas confiance aux valeurs par défaut : on durcit, on documente, on teste.
+    </p>
+    <p>
+      La prochaine étape sera de mettre en place du monitoring de sécurité (Wazuh) et de tester en LDAPS, deux choses que j'expérimente déjà sur mon homelab.
+    </p>
+    <a class="voir-projet" href="Rapport_GLPI.pdf" target="_blank">Lire le rapport complet (PDF) →</a>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

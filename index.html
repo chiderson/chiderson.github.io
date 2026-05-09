@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chiderson Laurenard — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="#apropos">Parcours</a>
+    <a href="#projets">Projets</a>
+    <a href="#veille">Veille</a>
+    <a href="#e5">E5</a>
+    <a href="#e6">E6</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+
+<section id="accueil" class="accueil">
+  <h1>Chiderson<br>Laurenard.</h1>
+  <p class="presentation">
+    Salut, moi c'est Chiderson. Je fais un BTS SIO SISR à Nexa Digital
+    School, et depuis septembre 2025 je suis en alternance chez
+    ALCONSEIL à Goussainville. Là-bas je m'occupe du parc et je monte
+    leur SI petit à petit.
+  </p>
+  <div class="liens">
+    <a href="#projets" class="cta">Mes projets →</a>
+    <a href="mailto:chiderson6@gmail.com" class="cta vide">Me joindre</a>
+  </div>
+  <div class="hero-meta">
+    <div><span>Âge</span>19 ans</div>
+    <div><span>Lieu</span>Île-de-France</div>
+    <div><span>École</span>Nexa Digital School</div>
+    <div><span>Alternance</span>ALCONSEIL — Goussainville</div>
+  </div>
+</section>
+
+
+<section id="apropos" class="bloc">
+  <div class="titre-section">
+    <span class="num">01</span>
+    <h2>À propos</h2>
+  </div>
+  <p class="chapeau">
+    19 ans, j'aime tout ce qui touche aux serveurs et aux réseaux. À côté des cours et de l'alternance je casse mon homelab dès que j'ai du temps.
+  </p>
+
+  <div class="duo">
+    <div class="carte">
+      <h3>Carte d'identité</h3>
+      <ul class="fiche-id">
+        <li><span>Nom</span>Chiderson Laurenard</li>
+        <li><span>Âge</span>19 ans</li>
+        <li><span>Formation</span>BTS SIO SISR (2<sup>e</sup> année)</li>
+        <li><span>École</span>Nexa Digital School · Paris 10<sup>e</sup></li>
+        <li><span>Alternance</span>ALCONSEIL · Goussainville</li>
+        <li><span>Objectif</span>Admin sys / réseau · cybersécurité</li>
+      </ul>
+    </div>
+
+    <div class="carte">
+      <h3>La formation</h3>
+      <p>
+        BTS SIO option SISR : administration des serveurs, des réseaux et de la cybersécurité d'entreprise. Formation en alternance à Nexa Digital School (Paris 10<sup>e</sup>).
+      </p>
+    </div>
+  </div>
+
+  <h3 class="ss-titre">Chronologie</h3>
+
+  <ol class="timeline-vert">
+
+    <li class="t-item">
+      <div class="t-date">2025 — 2026 · en cours</div>
+      <div class="t-titre">Alternance · ALCONSEIL</div>
+      <div class="t-sub">Administrateur systèmes junior · Goussainville</div>
+      <p>Structuration du SI d'une jeune SAS de conseil. Déploiement de GLPI 10, mise en place d'un Active Directory avec Samba 4, gestion du parc et helpdesk au quotidien, sécurisation du serveur et sauvegardes automatiques.</p>
+    </li>
+
+    <li class="t-item">
+      <div class="t-date">2024 — 2026 · en cours</div>
+      <div class="t-titre">BTS SIO option SISR</div>
+      <div class="t-sub">Nexa Digital School · Paris 10<sup>e</sup></div>
+      <p>Administration Windows Server et Linux, réseaux Cisco, cybersécurité, virtualisation. Projets techniques en atelier : Active Directory, pfSense, supervision Zabbix, sauvegardes Veeam.</p>
+    </li>
+
+    <li class="t-item">
+      <div class="t-date">2023 — 2024</div>
+      <div class="t-titre">Bac SN option Réseaux</div>
+      <div class="t-sub">Lycée La Tourelle · Sarcelles</div>
+      <p>Formation initiale aux systèmes numériques et aux réseaux. Première approche du matériel, du câblage, du dépannage, de Cisco IOS. Obtention du baccalauréat en 2024.</p>
+    </li>
+
+  </ol>
+</section>
+
+
+<section id="competences" class="bloc">
+  <div class="titre-section">
+    <span class="num">02</span>
+    <h2>Compétences</h2>
+  </div>
+  <p class="chapeau">
+    Les outils que j'ai vraiment touchés, soit en cours, soit en
+    alternance, soit chez moi. Le niveau à côté est franc : j'invente
+    rien.
+  </p>
+
+  <div class="grille-skills">
+
+    <div class="carte">
+      <h3>Systèmes</h3>
+      <ul class="skills">
+        <li>Windows 10 / 11<em>très à l'aise</em></li>
+        <li>Windows Server 2019/2022 (AD, GPO, DNS, DHCP)<em>à l'aise</em></li>
+        <li>Linux Debian, Ubuntu<em>à l'aise</em></li>
+        <li>macOS<em>bonnes bases</em></li>
+      </ul>
+    </div>
+
+    <div class="carte">
+      <h3>Réseaux</h3>
+      <ul class="skills">
+        <li>TCP/IP, sous-réseaux, VLSM<em>à l'aise</em></li>
+        <li>Cisco IOS — VLAN, routage, ACL<em>bonnes bases</em></li>
+        <li>VPN — IPsec, OpenVPN, WireGuard<em>bonnes bases</em></li>
+        <li>Wireshark<em>bonnes bases</em></li>
+      </ul>
+    </div>
+
+    <div class="carte">
+      <h3>Virtualisation</h3>
+      <ul class="skills">
+        <li>Proxmox VE<em>à l'aise</em></li>
+        <li>VMware ESXi / vSphere<em>bonnes bases</em></li>
+        <li>Docker<em>bonnes bases</em></li>
+      </ul>
+    </div>
+
+    <div class="carte">
+      <h3>Sécurité &amp; sauvegarde</h3>
+      <ul class="skills">
+        <li>pfSense, OPNsense<em>bonnes bases</em></li>
+        <li>Veeam Backup &amp; Replication<em>bonnes bases</em></li>
+        <li>Durcissement systèmes<em>en apprentissage</em></li>
+      </ul>
+    </div>
+
+    <div class="carte">
+      <h3>Supervision</h3>
+      <ul class="skills">
+        <li>Zabbix, Grafana<em>bonnes bases</em></li>
+        <li>GLPI<em>à l'aise</em></li>
+        <li>Git, GitLab<em>bonnes bases</em></li>
+      </ul>
+    </div>
+
+    <div class="carte">
+      <h3>Scripting</h3>
+      <ul class="skills">
+        <li>Bash<em>bonnes bases</em></li>
+        <li>PowerShell<em>en apprentissage</em></li>
+        <li>Microsoft 365<em>très à l'aise</em></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="projets" class="bloc">
+  <div class="titre-section">
+    <span class="num">03</span>
+    <h2>Projets</h2>
+  </div>
+  <p class="chapeau">
+    Du plus récent (mon alternance) au plus ancien. Pour chaque projet,
+    le contexte et ce que j'ai vraiment fait.
+  </p>
+
+  <div class="grille-3">
+
+    <article class="carte projet">
+      <div class="ligne-haut">
+        <span class="date">2025 — 2026</span>
+        <div class="tags">
+          <span class="tag">Alternance</span>
+          <span class="tag">Linux</span>
+        </div>
+      </div>
+      <h3>Solution GLPI chez ALCONSEIL</h3>
+      <p>
+        Projet d'alternance chez ALCONSEIL (SAS de conseil, Goussainville).
+        L'entreprise gérait son parc dans un tableur et les demandes par
+        mail. J'ai mis en place une vraie solution ITSM avec GLPI 10 :
+        installation d'une VM Ubuntu Server 24.04 + pile LAMP, configuration
+        de l'inventaire, du helpdesk et des contrats. En bonus j'ai monté
+        un Active Directory avec Samba 4 et fait la liaison LDAP avec GLPI.
+        Sécurisation HTTPS, UFW, Fail2ban et sauvegardes automatiques.
+      </p>
+      <p class="techno">Ubuntu Server · Apache · MariaDB · PHP · GLPI 10 · Samba/AD · LDAP</p>
+      <a class="voir-projet" href="glpi.html">Voir le projet →</a>
+    </article>
+
+    <article class="carte projet">
+      <div class="ligne-haut">
+        <span class="date">2025</span>
+        <div class="tags">
+          <span class="tag">Système</span>
+          <span class="tag">Windows</span>
+        </div>
+      </div>
+      <h3>Active Directory pour une PME fictive</h3>
+      <p>
+        Le projet de seconde année : monter l'infra d'une PME de 50 postes.
+        Deux Windows Server 2022 (principal + secondaire), DNS et DHCP,
+        OU par service, et les GPO les plus utiles (verrouillage,
+        lecteurs réseau, déploiement de logiciels).
+      </p>
+      <p class="techno">Windows Server · AD · GPO · DNS / DHCP · PowerShell</p>
+      <a class="voir-projet" href="ad.html">Voir le projet →</a>
+    </article>
+
+    <article class="carte projet">
+      <div class="ligne-haut">
+        <span class="date">2024 — en cours</span>
+        <div class="tags">
+          <span class="tag">Docker</span>
+          <span class="tag">Perso</span>
+        </div>
+      </div>
+      <h3>Conteneurisation Docker</h3>
+      <p>
+        J'ai migré la moitié des services de mon homelab vers Docker. Tout
+        est piloté par docker-compose, supervisé par Portainer, et publié
+        derrière un reverse proxy Traefik avec certificats Let's Encrypt
+        automatiques. Bien plus rapide à redéployer qu'avec des VMs
+        séparées.
+      </p>
+      <p class="techno">Docker · docker-compose · Portainer · Traefik</p>
+      <a class="voir-projet" href="docker.html">Voir le projet →</a>
+    </article>
+
+    <article class="carte projet">
+      <div class="ligne-haut">
+        <span class="date">2024 — en cours</span>
+        <div class="tags">
+          <span class="tag">Homelab</span>
+          <span class="tag">Perso</span>
+        </div>
+      </div>
+      <h3>Mon homelab Proxmox</h3>
+      <p>
+        Trois mini-PC d'occase en cluster Proxmox, chez moi. Dessus tournent
+        Pi-hole, Vaultwarden, Nextcloud, un GitLab et Wazuh pour la
+        détection. Le tout derrière un reverse proxy avec Let's Encrypt.
+        C'est mon terrain de jeu pour casser et apprendre.
+      </p>
+      <p class="techno">Proxmox · Docker · Reverse proxy · Wazuh · Pi-hole</p>
+      <a class="voir-projet" href="homelab.html">Voir le projet →</a>
+    </article>
+
+  </div>
+</section>
+
+
+<section id="veille" class="bloc">
+  <div class="titre-section">
+    <span class="num">04</span>
+    <h2>Veille technologique</h2>
+  </div>
+  <p class="chapeau">
+    Ce que j'ai suivi cette dernière année et demie en cybersécurité, en
+    système, et côté lois (NIS 2, DORA, AI Act…).
+  </p>
+
+  <div class="categories-veille">
+    <button class="cat-btn actif" data-cat="cyber">Cybersécurité</button>
+    <button class="cat-btn" data-cat="droit">Réglementation</button>
+    <button class="cat-btn" data-cat="systeme">Système</button>
+  </div>
+
+  <div class="grille-3" id="actus">
+
+    <article class="carte actu" data-cat="cyber">
+      <div class="ligne-haut">
+        <span class="date">15 AVR. 2026</span>
+        <div class="tags">
+          <span class="tag">État</span>
+        </div>
+      </div>
+      <h3>Incident de sécurité sur le portail ANTS</h3>
+      <p>
+        Le 15 avril 2026, l'ANTS a détecté un incident de sécurité sur ants.gouv.fr pouvant impliquer la divulgation de données de comptes particuliers et professionnels. L'ANTS, c'est l'agence qui gère les démarches en ligne pour les cartes grises, permis, passeports et CNI. Ce sont des services qu'on n'a pas le choix d'utiliser, donc quand l'État garde nos pièces d'identité, ça doit être blindé.
+      </p>
+      <a class="source" href="https://ants.gouv.fr/toute-l-actualite/incident-de-securite-relatif-au-portail-antsgouvfr" target="_blank">↗ ants.gouv.fr</a>
+    </article>
+
+    <article class="carte actu" data-cat="cyber">
+      <div class="ligne-haut">
+        <span class="date">MARS 2024</span>
+        <div class="tags">
+          <span class="tag">Fuite</span>
+        </div>
+      </div>
+      <h3>La fuite chez France Travail</h3>
+      <p>
+        43 millions de personnes touchées par une fuite chez France Travail. Pas des mots de passe mais des noms, dates de naissance, mails et numéros de Sécu. Ces données là, elles changent pas. Donc du phishing ciblé sur ces personnes pour des années.
+      </p>
+      <a class="source" href="https://www.cnil.fr/" target="_blank">↗ CNIL</a>
+    </article>
+
+    <article class="carte actu" data-cat="droit" style="display:none">
+      <div class="ligne-haut">
+        <span class="date">AVR. 2025</span>
+        <div class="tags">
+          <span class="tag">Loi</span>
+        </div>
+      </div>
+      <h3>NIS 2 transposée en France</h3>
+      <p>
+        La loi de résilience qui transpose NIS 2 a été promulguée. Beaucoup plus d'entreprises doivent appliquer des règles cyber maintenant, y compris des PME et des collectivités. Plein de boîtes qui se croyaient pas concernées vont devoir s'y mettre.
+      </p>
+      <a class="source" href="https://cyber.gouv.fr/" target="_blank">↗ cyber.gouv.fr</a>
+    </article>
+
+    <article class="carte actu" data-cat="systeme" style="display:none">
+      <div class="ligne-haut">
+        <span class="date">JUIL. 2024</span>
+        <div class="tags">
+          <span class="tag">Incident</span>
+        </div>
+      </div>
+      <h3>Le bug CrowdStrike</h3>
+      <p>
+        Le 19 juillet 2024, une mauvaise mise à jour de l'agent CrowdStrike a planté plus de 8 millions de PC Windows en quelques minutes. Aéroports, hôpitaux, banques bloqués pendant des heures. Pour moi ça reste l'incident le plus marquant que j'ai suivi. Ça m'a vraiment fait réaliser pourquoi on doit tester en staging avant de mettre en prod.
+      </p>
+      <a class="source" href="https://www.bleepingcomputer.com/" target="_blank">↗ BleepingComputer</a>
+    </article>
+
+  </div>
+
+</section>
+
+
+<section id="e5" class="bloc">
+  <div class="titre-section">
+    <span class="num">05</span>
+    <h2>Épreuve E5</h2>
+  </div>
+  <p class="chapeau">
+    L'épreuve E5 valide ma capacité à assurer le maintien en condition opérationnelle des services informatiques, à gérer un parc et à accompagner les utilisateurs dans la résolution d'incidents.
+  </p>
+
+  <a href="Rapport_GLPI.pdf" target="_blank" class="btn-tableau">↓ Télécharger le tableau E5</a>
+
+  <h3 class="ss-titre">Mes compétences</h3>
+
+  <div class="carte legendes">
+    <ul class="legende-list">
+      <li><span class="cube" style="background:#3b6cf0"></span>Gérer le patrimoine informatique</li>
+      <li><span class="cube" style="background:#e07b7b"></span>Répondre aux incidents et aux demandes d'assistance</li>
+      <li><span class="cube" style="background:#7dc36d"></span>Développer la présence en ligne de l'organisation</li>
+      <li><span class="cube" style="background:#e8b94a"></span>Travailler en mode projet</li>
+      <li><span class="cube" style="background:#9b8be0"></span>Mettre à disposition des utilisateurs un service informatique</li>
+      <li><span class="cube" style="background:#e07ba6"></span>Organiser son développement professionnel</li>
+    </ul>
+  </div>
+
+  <h3 class="ss-titre">Fiche de synthèse</h3>
+
+  <div class="synth-wrapper">
+    <table class="synth-table">
+      <thead>
+        <tr>
+          <th class="th-realisation">Réalisations professionnelles<br><span class="th-sub">(intitulé + documents associés)</span></th>
+          <th class="th-periode">Période</th>
+          <th class="th-comp">Gérer le patrimoine informatique</th>
+          <th class="th-comp">Répondre aux incidents &amp; demandes</th>
+          <th class="th-comp">Développer la présence en ligne</th>
+          <th class="th-comp">Travailler en mode projet</th>
+          <th class="th-comp">Mettre à disposition un service</th>
+          <th class="th-comp">Organiser son dév. professionnel</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="tr-section">
+          <td colspan="8">Réalisations en cours de formation</td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Active Directory PME fictive</div>
+            <div class="r-desc">Domaine pme.local, deux contrôleurs Windows Server 2022, OU par service, GPO de verrouillage et déploiement de logiciels, comptes en masse via PowerShell</div>
+            <div class="r-docs">Docs : procédure install · script Import-Users.ps1 · captures GPO</div>
+          </td>
+          <td class="td-periode">09/24<br>au<br>06/25</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Homelab Proxmox + Conteneurisation Docker</div>
+            <div class="r-desc">Cluster Proxmox 3 nœuds chez moi, services en VMs et en conteneurs Docker (Pi-hole, Vaultwarden, Nextcloud, GitLab, Wazuh) derrière reverse proxy Traefik</div>
+            <div class="r-docs">Docs : docker-compose.yml · captures Portainer · schéma cluster</div>
+          </td>
+          <td class="td-periode">09/24<br>au<br>06/26</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Site portfolio (ce site)</div>
+            <div class="r-desc">Conception et codage à la main en HTML/CSS/JS du présent portfolio, hébergé sur GitHub Pages, présentation des projets et de la veille</div>
+            <div class="r-docs">Docs : code source GitHub · le site lui-même</div>
+          </td>
+          <td class="td-periode">09/25<br>au<br>06/26</td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Veille technologique cybersécurité &amp; réglementation</div>
+            <div class="r-desc">Suivi CERT-FR, ANSSI, BleepingComputer, LeMagIT via Inoreader, prise de notes Obsidian, synthèses régulières</div>
+            <div class="r-docs">Docs : section Veille du portfolio · notes Obsidian</div>
+          </td>
+          <td class="td-periode">09/24<br>au<br>06/26</td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+        </tr>
+
+        <tr class="tr-section">
+          <td colspan="8">Réalisations en milieu professionnel — alternance ALCONSEIL (Goussainville)</td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Déploiement de la solution GLPI</div>
+            <div class="r-desc">Mise en place GLPI 10 sur Ubuntu Server 24.04 + LAMP, inventaire, helpdesk, contrats. Bonus AD Samba 4 et liaison LDAP. Sécurisation HTTPS, UFW, Fail2ban, sauvegardes</div>
+            <div class="r-docs">Docs : rapport projet 50 pages · scripts d'installation · captures</div>
+          </td>
+          <td class="td-periode">09/25<br>au<br>12/25</td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Suivi du parc et helpdesk au quotidien</div>
+            <div class="r-desc">Inventaire physique, étiquetage des postes, suivi des licences et contrats, traitement des tickets utilisateurs (matériel, accès, comptes, dépannages)</div>
+            <div class="r-docs">Docs : tickets résolus dans GLPI · rapports mensuels</div>
+          </td>
+          <td class="td-periode">09/25<br>au<br>06/26</td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+        </tr>
+
+        <tr class="tr-data">
+          <td class="td-realisation">
+            <div class="r-titre">Administration Active Directory ALCONSEIL</div>
+            <div class="r-desc">Création/désactivation comptes à l'arrivée/départ des consultants, gestion groupes et droits, application de la politique de mots de passe</div>
+            <div class="r-docs">Docs : procédure d'arrivée · procédure de sortie · script audit comptes</div>
+          </td>
+          <td class="td-periode">09/25<br>au<br>06/26</td>
+          <td class="td-check">✓</td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+          <td class="td-empty"></td>
+          <td class="td-check">✓</td>
+          <td class="td-empty"></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="ss-titre" style="margin-top:50px">Mes tâches informatiques</h3>
+
+  <div class="filtres-taches" id="filtres-taches">
+    <button class="filtre-tache actif" data-filt="toutes">Toutes</button>
+    <button class="filtre-tache" data-filt="scolaire">En milieu scolaire</button>
+    <button class="filtre-tache" data-filt="pro">En milieu professionnel</button>
+  </div>
+
+  <div class="grille-3 taches" id="taches">
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2025 — 2026</span>
+        <span class="badge-milieu scolaire">École</span>
+      </div>
+      <h4>Site portfolio (ce site)</h4>
+      <p>Conception et codage à la main de ce portfolio en HTML/CSS/JS, hébergé sur GitHub Pages. Il présente mon parcours, mes projets, ma veille et mes épreuves E5/E6.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#7dc36d" title="Développer la présence en ligne"></span>
+        <span class="cube" style="background:#e8b94a" title="Travailler en mode projet"></span>
+        <span class="cube" style="background:#e07ba6" title="Organiser son dev pro"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="pro">
+      <div class="ligne-haut">
+        <span class="date">2025 — 2026</span>
+        <span class="badge-milieu pro">Pro</span>
+      </div>
+      <h4>Solution GLPI chez ALCONSEIL</h4>
+      <p>Déploiement d'une solution ITSM complète sur Ubuntu Server. Inventaire, helpdesk, contrats, AD/LDAP, sécurisation, sauvegardes.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#3b6cf0" title="Gérer le patrimoine"></span>
+        <span class="cube" style="background:#e07b7b" title="Répondre aux incidents"></span>
+        <span class="cube" style="background:#e8b94a" title="Travailler en mode projet"></span>
+        <span class="cube" style="background:#9b8be0" title="Mettre à disposition un service"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2025</span>
+        <span class="badge-milieu scolaire">École</span>
+      </div>
+      <h4>Active Directory PME fictive</h4>
+      <p>Mise en place d'un domaine Windows Server 2022 avec deux contrôleurs, GPO, OU par service, DNS et DHCP redondants.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#e8b94a" title="Travailler en mode projet"></span>
+        <span class="cube" style="background:#9b8be0" title="Mettre à disposition un service"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2025</span>
+        <span class="badge-milieu scolaire">École</span>
+      </div>
+      <h4>Pare-feu pfSense et VLAN</h4>
+      <p>Segmentation des flux par VLAN (LAN, DMZ, Wi-Fi invité), filtrage strict et publication d'un service via reverse proxy HAProxy.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#e8b94a" title="Travailler en mode projet"></span>
+        <span class="cube" style="background:#9b8be0" title="Mettre à disposition un service"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2025</span>
+        <span class="badge-milieu scolaire">École</span>
+      </div>
+      <h4>Supervision Zabbix + Grafana</h4>
+      <p>Installation d'un Zabbix sur Debian, agents Windows/Linux, SNMP sur les switchs, dashboards Grafana, alertes mail.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#e07b7b" title="Répondre aux incidents"></span>
+        <span class="cube" style="background:#9b8be0" title="Mettre à disposition un service"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2024</span>
+        <span class="badge-milieu scolaire">École</span>
+      </div>
+      <h4>Sauvegarde 3-2-1 et PRA</h4>
+      <p>Stratégie Veeam sur parc virtualisé, copies hebdo externalisées sur NAS, tests de restauration mensuels et rédaction du PRA.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#3b6cf0" title="Gérer le patrimoine"></span>
+        <span class="cube" style="background:#e8b94a" title="Travailler en mode projet"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="pro">
+      <div class="ligne-haut">
+        <span class="date">2025 — 2026</span>
+        <span class="badge-milieu pro">Pro</span>
+      </div>
+      <h4>Suivi du parc ALCONSEIL</h4>
+      <p>Inventaire physique, étiquetage des postes, suivi des licences et contrats fournisseurs dans GLPI au quotidien.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#3b6cf0" title="Gérer le patrimoine"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="pro">
+      <div class="ligne-haut">
+        <span class="date">2025 — 2026</span>
+        <span class="badge-milieu pro">Pro</span>
+      </div>
+      <h4>Tickets utilisateurs ALCONSEIL</h4>
+      <p>Réponse aux incidents et demandes des consultants via le helpdesk GLPI : matériel, accès, comptes, dépannages divers.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#e07b7b" title="Répondre aux incidents"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2024 — en cours</span>
+        <span class="badge-milieu scolaire">Perso</span>
+      </div>
+      <h4>Homelab Proxmox</h4>
+      <p>Cluster trois nœuds, services auto-hébergés (Pi-hole, Vaultwarden, Nextcloud, GitLab, Wazuh), reverse proxy et HTTPS.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#3b6cf0" title="Gérer le patrimoine"></span>
+        <span class="cube" style="background:#e07ba6" title="Organiser son dev pro"></span>
+      </div>
+    </article>
+
+    <article class="carte tache" data-milieu="scolaire">
+      <div class="ligne-haut">
+        <span class="date">2024 — 2026</span>
+        <span class="badge-milieu scolaire">École</span>
+      </div>
+      <h4>Veille technologique</h4>
+      <p>Lecture quotidienne de flux RSS sur la cyber, le système, et la réglementation. Notes dans Obsidian, synthèses régulières.</p>
+      <div class="cubes">
+        <span class="cube" style="background:#e07ba6" title="Organiser son dev pro"></span>
+      </div>
+    </article>
+
+
+  </div>
+
+</section>
+
+
+<section id="e6" class="bloc">
+  <div class="titre-section">
+    <span class="num">06</span>
+    <h2>Épreuve E6</h2>
+  </div>
+  <p class="chapeau">
+    L'épreuve E6 valide ma capacité à protéger les données, préserver l'identité numérique de l'organisation et assurer la cybersécurité d'une infrastructure. Je m'appuie sur mon projet d'alternance GLPI vu sous l'angle sécurité.
+  </p>
+
+  <h3 class="ss-titre">Le projet support : GLPI chez ALCONSEIL</h3>
+
+  <div class="carte e6-projet">
+    <p>
+      Pour mon E6 je reprends le projet GLPI. Après avoir installé l'outil, j'ai dû le sécuriser pour qu'il puisse vraiment vivre dans une PME : protéger les données, gérer les comptes, durcir le serveur, prévoir les pannes. Le dossier technique détaille chaque mesure mise en place et la compétence E6 qu'elle illustre.
+    </p>
+    <div class="liens-e6">
+      <a href="e6.html" class="btn-tableau">Voir le dossier technique →</a>
+      <a href="Rapport_GLPI.pdf" target="_blank" class="lien-secondaire">Rapport complet (PDF)</a>
+    </div>
+  </div>
+
+  <h3 class="ss-titre">Compétences mobilisées</h3>
+
+  <div class="grille-3">
+
+    <div class="carte e6-competence">
+      <span class="cube" style="background:#7dc36d"></span>
+      <h4>Protéger les données</h4>
+      <p>Sauvegardes automatiques (dump MariaDB + tar GLPI), principe du moindre privilège sur la base, chiffrement HTTPS du transit.</p>
+    </div>
+
+    <div class="carte e6-competence">
+      <span class="cube" style="background:#3b6cf0"></span>
+      <h4>Identité numérique</h4>
+      <p>Active Directory Samba 4, authentification centralisée GLPI via LDAP, politique de mots de passe appliquée à tous les comptes.</p>
+    </div>
+
+    <div class="carte e6-competence">
+      <span class="cube" style="background:#e07b7b"></span>
+      <h4>Sécuriser les équipements</h4>
+      <p>UFW en pare-feu (deny par défaut), Fail2ban contre le brute-force SSH, permissions strictes sur /var/www/glpi.</p>
+    </div>
+
+    <div class="carte e6-competence">
+      <span class="cube" style="background:#e8b94a"></span>
+      <h4>Disponibilité &amp; intégrité</h4>
+      <p>Sauvegardes quotidiennes via cron, copie sur stockage séparé, tests de restauration mensuels documentés.</p>
+    </div>
+
+    <div class="carte e6-competence">
+      <span class="cube" style="background:#9b8be0"></span>
+      <h4>Cybersécurité d'une infra</h4>
+      <p>Durcissement Ubuntu, sécurisation des chemins GLPI (config/ et files/ hors DocumentRoot), réseau host-only privé.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="contact" class="bloc">
+  <div class="titre-section">
+    <span class="num">07</span>
+    <h2>Me contacter</h2>
+  </div>
+  <p class="chapeau">
+    Si vous voulez me joindre, le plus simple c'est par mail. Je réponds
+    dans la journée.
+  </p>
+
+  <div class="carte">
+    <h3>Mes coordonnées</h3>
+    <ul class="coord">
+      <li><b>E-mail</b> <a href="mailto:chiderson6@gmail.com">chiderson6@gmail.com</a></li>
+      <li><b>GitHub</b> <a href="#" target="_blank">github.com/chiderson</a></li>
+      <li><b>Localisation</b> Île-de-France</li>
+    </ul>
+  </div>
+</section>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

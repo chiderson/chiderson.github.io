@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 460" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 13px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .label { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .src { fill: #ecf3eb; stroke: #7dc36d; stroke-width: 1.5; rx: 6; }
+      .ots { fill: #ecf1f5; stroke: #2d4f8e; stroke-width: 2; rx: 8; }
+      .agent { fill: #fff7e2; stroke: #e8b94a; stroke-width: 1.5; rx: 6; }
+      .net { stroke: #2d4f8e; stroke-width: 1.5; fill: none; marker-end: url(#tri); }
+    </style>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2d4f8e"/>
+    </marker>
+  </defs>
+  <rect width="820" height="460" fill="#fff"/>
+
+  <text class="titre" x="410" y="28" text-anchor="middle">Flux d'un ticket dans osTicket</text>
+
+  <!-- Étape 1 : utilisateur -->
+  <rect class="src" x="40" y="80" width="180" height="80"/>
+  <text class="titre" x="130" y="106" text-anchor="middle">1 — Utilisateur</text>
+  <text class="legende" x="130" y="124" text-anchor="middle">Envoie un mail à</text>
+  <text class="legende" x="130" y="140" text-anchor="middle">support@lab.local</text>
+  <text class="legende" x="130" y="154" text-anchor="middle">ou clique "Nouveau ticket"</text>
+
+  <line class="net" x1="220" y1="120" x2="290" y2="120"/>
+
+  <!-- Étape 2 : Postfix -->
+  <rect class="src" x="290" y="80" width="180" height="80"/>
+  <text class="titre" x="380" y="106" text-anchor="middle">2 — Postfix</text>
+  <text class="legende" x="380" y="124" text-anchor="middle">Reçoit le mail</text>
+  <text class="legende" x="380" y="140" text-anchor="middle">Le stocke dans</text>
+  <text class="legende" x="380" y="154" text-anchor="middle">la boîte support</text>
+
+  <line class="net" x1="470" y1="120" x2="540" y2="120"/>
+
+  <!-- Étape 3 : osTicket fetch -->
+  <rect class="ots" x="540" y="80" width="240" height="80"/>
+  <text class="titre" x="660" y="104" text-anchor="middle">3 — osTicket</text>
+  <text class="ss-titre" x="660" y="120" text-anchor="middle">cron fetch.php toutes les 5 min</text>
+  <text class="legende" x="660" y="138" text-anchor="middle">Récupère via IMAP</text>
+  <text class="legende" x="660" y="154" text-anchor="middle">Crée un ticket avec ID unique</text>
+
+  <line class="net" x1="660" y1="160" x2="660" y2="220"/>
+
+  <!-- Étape 4 : Files / SLA -->
+  <rect class="ots" x="540" y="220" width="240" height="80"/>
+  <text class="titre" x="660" y="244" text-anchor="middle">4 — Routage</text>
+  <text class="ss-titre" x="660" y="260" text-anchor="middle">Règles + SLA</text>
+  <text class="legende" x="660" y="278" text-anchor="middle">File "Support général"</text>
+  <text class="legende" x="660" y="292" text-anchor="middle">Priorité auto · SLA 4h</text>
+
+  <line class="net" x1="540" y1="260" x2="470" y2="260"/>
+
+  <!-- Étape 5 : Agent -->
+  <rect class="agent" x="290" y="220" width="180" height="80"/>
+  <text class="titre" x="380" y="244" text-anchor="middle">5 — Agent</text>
+  <text class="ss-titre" x="380" y="260" text-anchor="middle">Reçoit l'alerte mail</text>
+  <text class="legende" x="380" y="278" text-anchor="middle">Se connecte au panel</text>
+  <text class="legende" x="380" y="292" text-anchor="middle">Répond au ticket</text>
+
+  <line class="net" x1="290" y1="260" x2="220" y2="260"/>
+
+  <!-- Étape 6 : retour utilisateur -->
+  <rect class="src" x="40" y="220" width="180" height="80"/>
+  <text class="titre" x="130" y="244" text-anchor="middle">6 — Utilisateur</text>
+  <text class="legende" x="130" y="262" text-anchor="middle">Reçoit la réponse</text>
+  <text class="legende" x="130" y="278" text-anchor="middle">par mail ou sur le portail</text>
+  <text class="legende" x="130" y="292" text-anchor="middle">Peut répondre, qui ré-ouvre</text>
+
+  <!-- Légende -->
+  <rect x="40" y="350" width="740" height="80" fill="#fafcfd" stroke="#e0dccf" rx="6"/>
+  <text class="titre" x="60" y="372">Configuration mise en place</text>
+  <text class="legende" x="60" y="390">3 files (queues) : Support général, Support technique, Demandes — chacune avec son groupe d'agents et son SLA</text>
+  <text class="legende" x="60" y="406">SLA exemples : Support général 4h ouvrées, Support technique 8h ouvrées, Demandes 24h ouvrées</text>
+  <text class="legende" x="60" y="422">Stack : Debian 12 · Apache 2.4 · MariaDB · PHP 8.1 · osTicket 1.18 · Postfix · IMAP local</text>
+</svg>

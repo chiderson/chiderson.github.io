@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 13px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .label { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .dc { fill: #ecf1f5; stroke: #2d4f8e; stroke-width: 1.5; rx: 6; }
+      .pc { fill: #fafcfd; stroke: #c0b8a8; stroke-width: 1; rx: 6; }
+      .net { stroke: #2d4f8e; stroke-width: 1.5; fill: none; }
+      .dim { stroke: #c0b8a8; stroke-width: 1; fill: none; stroke-dasharray: 3 3; }
+    </style>
+  </defs>
+  <rect width="820" height="520" fill="#fff"/>
+
+  <text class="titre" x="410" y="28" text-anchor="middle">Architecture Active Directory — domaine pme.local</text>
+
+  <!-- Switch central -->
+  <rect x="350" y="80" width="120" height="40" fill="#fdfaf2" stroke="#b8a98e" stroke-width="1.5" rx="4"/>
+  <text class="titre" x="410" y="98" text-anchor="middle">Switch L2</text>
+  <text class="legende" x="410" y="113" text-anchor="middle">Cisco 2960</text>
+
+  <!-- DC1 -->
+  <rect class="dc" x="120" y="170" width="180" height="80"/>
+  <text class="titre" x="210" y="194" text-anchor="middle">SRV-DC01 (PDC)</text>
+  <text class="ss-titre" x="210" y="210" text-anchor="middle">Windows Server 2022</text>
+  <text class="legende" x="210" y="225" text-anchor="middle">192.168.1.10 / 24</text>
+  <text class="legende" x="210" y="240" text-anchor="middle">AD DS · DNS · DHCP</text>
+
+  <!-- DC2 -->
+  <rect class="dc" x="520" y="170" width="180" height="80"/>
+  <text class="titre" x="610" y="194" text-anchor="middle">SRV-DC02 (BDC)</text>
+  <text class="ss-titre" x="610" y="210" text-anchor="middle">Windows Server 2022</text>
+  <text class="legende" x="610" y="225" text-anchor="middle">192.168.1.11 / 24</text>
+  <text class="legende" x="610" y="240" text-anchor="middle">AD DS · DNS · DHCP</text>
+
+  <!-- réplication -->
+  <line class="dim" x1="300" y1="210" x2="520" y2="210"/>
+  <text class="label" x="410" y="205" text-anchor="middle">Réplication AD</text>
+
+  <!-- liens vers switch -->
+  <line class="net" x1="210" y1="170" x2="370" y2="120"/>
+  <line class="net" x1="610" y1="170" x2="450" y2="120"/>
+
+  <!-- Postes clients -->
+  <rect class="pc" x="60" y="320" width="120" height="55"/>
+  <text class="titre" x="120" y="342" text-anchor="middle">Direction</text>
+  <text class="legende" x="120" y="358" text-anchor="middle">3 postes Win 11</text>
+
+  <rect class="pc" x="200" y="320" width="120" height="55"/>
+  <text class="titre" x="260" y="342" text-anchor="middle">RH</text>
+  <text class="legende" x="260" y="358" text-anchor="middle">5 postes Win 11</text>
+
+  <rect class="pc" x="340" y="320" width="120" height="55"/>
+  <text class="titre" x="400" y="342" text-anchor="middle">Compta</text>
+  <text class="legende" x="400" y="358" text-anchor="middle">8 postes Win 11</text>
+
+  <rect class="pc" x="480" y="320" width="120" height="55"/>
+  <text class="titre" x="540" y="342" text-anchor="middle">Technique</text>
+  <text class="legende" x="540" y="358" text-anchor="middle">12 postes Win 11</text>
+
+  <rect class="pc" x="620" y="320" width="120" height="55"/>
+  <text class="titre" x="680" y="342" text-anchor="middle">Commercial</text>
+  <text class="legende" x="680" y="358" text-anchor="middle">22 postes Win 11</text>
+
+  <!-- liens postes vers switch -->
+  <line class="net" x1="120" y1="320" x2="380" y2="120"/>
+  <line class="net" x1="260" y1="320" x2="395" y2="120"/>
+  <line class="net" x1="400" y1="320" x2="410" y2="120"/>
+  <line class="net" x1="540" y1="320" x2="425" y2="120"/>
+  <line class="net" x1="680" y1="320" x2="440" y2="120"/>
+
+  <!-- Légende OU -->
+  <rect x="60" y="410" width="700" height="80" fill="#fafcfd" stroke="#e0dccf" rx="6"/>
+  <text class="titre" x="80" y="432">Organisation des comptes</text>
+  <text class="legende" x="80" y="450">└─ pme.local</text>
+  <text class="legende" x="100" y="464">    ├─ OU=Direction · OU=RH · OU=Compta · OU=Technique · OU=Commercial</text>
+  <text class="legende" x="100" y="478">    ├─ OU=Servers (les 2 DC)</text>
+  <text class="legende" x="100" y="492">    └─ OU=Groupes (groupes de sécurité par service : g_compta_lecture, g_compta_ecriture, etc.)</text>
+</svg>

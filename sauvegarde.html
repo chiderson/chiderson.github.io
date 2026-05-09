@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sauvegarde 3-2-1 et plan de reprise — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet de première année · 2024</span>
+      <span>BTS SIO SISR</span>
+    </div>
+    <h1>Sauvegarde 3-2-1 et plan de reprise d'activité</h1>
+    <p class="sous-titre">
+      Stratégie de sauvegarde complète sur un parc virtualisé, avec tests de restauration mensuels et rédaction du PRA associé.
+    </p>
+    <div class="techno-pills">
+      <span>Veeam Backup &amp; Replication</span>
+      <span>VMware ESXi</span>
+      <span>NAS Synology</span>
+      <span>SMB / NFS</span>
+      <span>PRA</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture de sauvegarde</h2>
+    <figure>
+      <img src="img/sauvegarde/architecture.svg" alt="Architecture de sauvegarde 3-2-1">
+      <figcaption>Stratégie 3-2-1 : 3 copies des données sur 2 supports différents, dont 1 hors site</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le principe 3-2-1</h2>
+    <p>
+      C'est la règle de base de la sauvegarde, simple à retenir :
+    </p>
+    <ul class="puces">
+      <li><b>3</b> copies des données importantes</li>
+      <li><b>2</b> supports différents (disque dur + bande, par exemple)</li>
+      <li><b>1</b> copie hors site (au minimum)</li>
+    </ul>
+    <p>
+      Si on respecte ça, on est protégé contre la suppression accidentelle, la panne matérielle, le vol, l'incendie, et le ransomware. Quasiment tout sauf la maladresse de l'admin qui restaure par-dessus.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>L'environnement</h2>
+    <p>
+      Un parc simulé en TP : trois VMs sur un hyperviseur ESXi (un AD, un serveur de fichiers, un serveur web). On veut pouvoir restaurer chacune en cas de panne, et restaurer un fichier en particulier en cas de suppression accidentelle.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>La stratégie mise en place</h2>
+    <h3>Sauvegarde quotidienne avec Veeam</h3>
+    <p>
+      Un job Veeam tous les jours à 23h, sauvegarde des trois VMs en mode <i>image</i>. Rétention 14 jours. Le tout sur un NAS Synology dédié à ça (premier support, sur place).
+    </p>
+    <h3>Externalisation hebdomadaire</h3>
+    <p>
+      Tous les samedis matin, un script copie les sauvegardes de la semaine vers un disque externe USB chiffré. Le disque est ensuite emporté hors site (chez le responsable). Rétention sur quatre semaines tournantes.
+    </p>
+    <h3>Test de restauration mensuel</h3>
+    <p>
+      Chaque premier lundi du mois, je restaure une des VMs dans un environnement de test isolé pour vérifier que les sauvegardes sont vraiment exploitables. Une sauvegarde qu'on n'a jamais restaurée, c'est juste un fichier qu'on espère valable.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le plan de reprise d'activité</h2>
+    <p>
+      J'ai aussi rédigé le PRA, en suivant la structure recommandée par l'ANSSI dans son guide d'hygiène informatique. Le document de huit pages couvre :
+    </p>
+    <ul class="puces">
+      <li>L'inventaire des services critiques et de leur RTO/RPO acceptables</li>
+      <li>Les rôles et responsabilités en cas d'incident</li>
+      <li>La procédure pas-à-pas de restauration de chaque VM</li>
+      <li>La liste des prestataires à contacter (hébergeur, fournisseur de licences)</li>
+      <li>La procédure de communication interne en cas d'incident long</li>
+      <li>Le plan de test annuel du PRA lui-même</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'ai appris</h2>
+    <p>
+      Faire des sauvegardes c'est facile. Garantir qu'elles sont restaurables, c'est tout autre chose. Mon premier test de restauration a échoué : la VM remontait mais Active Directory était en boucle parce que la sauvegarde avait été prise pendant une réplication. Depuis je fais attention à la cohérence applicative.
+    </p>
+    <p>
+      Et le PRA, c'est pas un document qu'on écrit puis qu'on oublie. Si personne ne sait où il est ou comment l'utiliser, il sert à rien. Mon prof a insisté pour qu'on l'imprime et qu'on le mette dans un classeur dans le bureau du responsable, en plus du fichier numérique.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

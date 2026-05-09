@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 540" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 13px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .label { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .vlan { stroke-width: 1.5; rx: 6; }
+      .v10 { fill: #ecf3eb; stroke: #7dc36d; }
+      .v20 { fill: #fdeae9; stroke: #e07b7b; }
+      .v30 { fill: #fff7e2; stroke: #e8b94a; }
+      .v40 { fill: #ecf1f5; stroke: #2d4f8e; }
+      .pf { fill: #1a1612; }
+      .pf-text { fill: #fff; }
+      .net { stroke: #1a1612; stroke-width: 1.5; fill: none; }
+      .deny { stroke: #c63232; stroke-width: 2; fill: none; stroke-dasharray: 4 3; }
+      .allow { stroke: #4a8c3a; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  <rect width="820" height="540" fill="#fff"/>
+
+  <text class="titre" x="410" y="28" text-anchor="middle">Pare-feu pfSense — segmentation par VLAN</text>
+
+  <!-- Internet -->
+  <rect x="340" y="60" width="140" height="40" fill="#fdfaf2" stroke="#b8a98e" stroke-width="1.5" rx="6"/>
+  <text class="titre" x="410" y="78" text-anchor="middle">Internet</text>
+  <text class="legende" x="410" y="92" text-anchor="middle">FAI</text>
+
+  <line class="net" x1="410" y1="100" x2="410" y2="140"/>
+
+  <!-- pfSense -->
+  <rect class="pf" x="290" y="140" width="240" height="60" rx="8"/>
+  <text class="titre pf-text" x="410" y="166" text-anchor="middle">pfSense</text>
+  <text class="ss-titre" x="410" y="184" text-anchor="middle" fill="#aaa">Routeur · NAT · Filtrage · HAProxy</text>
+
+  <!-- 4 VLANs (rectangles) -->
+  <!-- VLAN 10 LAN -->
+  <rect class="vlan v10" x="40" y="240" width="180" height="180"/>
+  <text class="titre" x="130" y="262" text-anchor="middle">VLAN 10 — LAN</text>
+  <text class="legende" x="130" y="278" text-anchor="middle">192.168.10.0/24</text>
+  <text class="legende" x="130" y="320" text-anchor="middle">Postes de travail</text>
+  <text class="legende" x="130" y="336" text-anchor="middle">Imprimantes</text>
+  <text class="legende" x="130" y="352" text-anchor="middle">Serveur de fichiers</text>
+
+  <!-- VLAN 20 DMZ -->
+  <rect class="vlan v20" x="240" y="240" width="180" height="180"/>
+  <text class="titre" x="330" y="262" text-anchor="middle">VLAN 20 — DMZ</text>
+  <text class="legende" x="330" y="278" text-anchor="middle">192.168.20.0/24</text>
+  <text class="legende" x="330" y="320" text-anchor="middle">Serveur web public</text>
+  <text class="legende" x="330" y="336" text-anchor="middle">Mail relay</text>
+  <text class="legende" x="330" y="352" text-anchor="middle">Reverse proxy</text>
+
+  <!-- VLAN 30 Wi-Fi -->
+  <rect class="vlan v30" x="440" y="240" width="180" height="180"/>
+  <text class="titre" x="530" y="262" text-anchor="middle">VLAN 30 — Wi-Fi</text>
+  <text class="legende" x="530" y="278" text-anchor="middle">192.168.30.0/24</text>
+  <text class="legende" x="530" y="320" text-anchor="middle">Wi-Fi invité</text>
+  <text class="legende" x="530" y="336" text-anchor="middle">Internet uniquement</text>
+  <text class="legende" x="530" y="352" text-anchor="middle">Pas d'accès LAN/DMZ</text>
+
+  <!-- VLAN 40 Admin -->
+  <rect class="vlan v40" x="640" y="240" width="140" height="180"/>
+  <text class="titre" x="710" y="262" text-anchor="middle">VLAN 40</text>
+  <text class="titre" x="710" y="276" text-anchor="middle">Admin</text>
+  <text class="legende" x="710" y="292" text-anchor="middle">192.168.40.0/24</text>
+  <text class="legende" x="710" y="320" text-anchor="middle">Console admin</text>
+  <text class="legende" x="710" y="336" text-anchor="middle">Accès tout</text>
+
+  <!-- liens depuis pfSense -->
+  <line class="net" x1="350" y1="200" x2="130" y2="240"/>
+  <line class="net" x1="380" y1="200" x2="330" y2="240"/>
+  <line class="net" x1="440" y1="200" x2="530" y2="240"/>
+  <line class="net" x1="470" y1="200" x2="710" y2="240"/>
+
+  <!-- Légende des règles -->
+  <rect x="60" y="450" width="700" height="70" fill="#fafcfd" stroke="#e0dccf" rx="6"/>
+  <text class="titre" x="80" y="472">Règles principales (deny by default)</text>
+  <text class="legende" x="80" y="490">LAN → Internet : autorisé · LAN → DMZ : SSH admin uniquement · DMZ → LAN : interdit</text>
+  <text class="legende" x="80" y="506">Wi-Fi → Internet : autorisé · Wi-Fi → LAN/DMZ : interdit · Admin → tout : autorisé</text>
+</svg>

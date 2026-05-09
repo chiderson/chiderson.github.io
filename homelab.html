@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon homelab Proxmox — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet personnel · depuis 2024</span>
+      <span>À la maison</span>
+    </div>
+    <h1>Mon homelab Proxmox</h1>
+    <p class="sous-titre">
+      Trois mini-PC d'occasion en cluster Proxmox, qui hébergent mes services personnels et qui me servent de terrain d'expérimentation permanent.
+    </p>
+    <div class="techno-pills">
+      <span>Proxmox VE 8</span>
+      <span>Cluster 3 nœuds</span>
+      <span>ZFS</span>
+      <span>Docker</span>
+      <span>Wazuh</span>
+      <span>Pi-hole</span>
+      <span>Vaultwarden</span>
+      <span>Nextcloud</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture</h2>
+    <figure>
+      <img src="img/homelab/architecture.svg" alt="Architecture du homelab Proxmox">
+      <figcaption>Le cluster 3 nœuds avec ses VMs et conteneurs principaux, plus la sauvegarde externalisée</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>L'idée</h2>
+    <p>
+      Le homelab c'est ce qui m'a fait progresser le plus vite. Quand j'apprends quelque chose en cours, je veux pouvoir le tester chez moi, le casser, le remonter, sans risquer de planter quoi que ce soit d'important. Quand je veux essayer un nouvel outil, je le déploie chez moi, je l'utilise pour de vrai pendant quelques semaines, et je décide si je le garde.
+    </p>
+    <p>
+      Au-delà de l'apprentissage, c'est aussi devenu mon hébergement personnel : mots de passe, calendrier, fichiers, photos. Tout ce qui sortait avant chez Google ou ailleurs est maintenant chez moi.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le matériel</h2>
+    <p>
+      Trois mini-PC d'occasion achetés sur LeBonCoin, choisis pour leur faible consommation et leur taille (ils tiennent dans un coin du salon, sans bruit) :
+    </p>
+    <ul class="puces">
+      <li><b>Nœud 1</b> — Lenovo ThinkCentre Tiny, i5-8500T, 32 Go RAM, 1 To NVMe</li>
+      <li><b>Nœud 2</b> — Dell OptiPlex Micro, i5-7500T, 16 Go RAM, 500 Go NVMe + 2 To SATA</li>
+      <li><b>Nœud 3</b> — HP ProDesk Mini, i5-6500T, 16 Go RAM, 256 Go NVMe + 1 To SATA</li>
+      <li>Un switch 8 ports gigabit Netgear</li>
+      <li>Un onduleur APC qui m'a déjà sauvé deux fois en cas de coupure</li>
+    </ul>
+    <p>
+      Coût total environ 600 €, beaucoup moins qu'un seul vrai serveur d'occasion qui ferait plus de bruit qu'un sèche-cheveux.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le cluster Proxmox</h2>
+    <p>
+      Les trois mini-PC sont en cluster Proxmox VE 8. L'avantage, c'est que je peux migrer une VM d'un nœud à l'autre à chaud (quasi sans interruption de service) quand je veux faire de la maintenance ou redémarrer une machine.
+    </p>
+    <p>
+      Le stockage est en ZFS local sur chaque nœud, avec snapshots automatiques quotidiens. Pas de stockage partagé pour l'instant, parce que ça nécessiterait du 10 Gbps que je n'ai pas, mais les sauvegardes Proxmox Backup Server (PBS) tournent depuis le nœud 3 vers un disque externe USB 3.0 toutes les nuits.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Les services hébergés</h2>
+    <p>
+      Une partie en VMs, l'autre en conteneurs Docker (voir le projet Docker). Les principaux :
+    </p>
+    <ul class="puces">
+      <li><b>Pi-hole</b> — DNS filtrant qui bloque les pubs et trackers (capture plus bas)</li>
+      <li><b>Vaultwarden</b> — gestionnaire de mots de passe (Bitwarden)</li>
+      <li><b>Nextcloud</b> — cloud personnel (calendrier, fichiers, contacts)</li>
+      <li><b>GitLab</b> — pour mes scripts et le code de mes projets</li>
+      <li><b>Wazuh</b> — détection d'intrusion, je joue avec les règles</li>
+      <li><b>Jellyfin</b> — serveur média pour la maison</li>
+      <li><b>Home Assistant</b> — un peu de domotique (capteurs, lumières)</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Pi-hole en action</h2>
+    <p>
+      Pi-hole est l'un des premiers services que j'ai installés sur le homelab. Il fait office de DNS pour tout le réseau de la maison et bloque les pubs et trackers au niveau DNS.
+    </p>
+    <figure>
+      <img src="img/homelab/01-pihole-login.png" alt="Page de connexion Pi-hole">
+      <figcaption>L'écran de connexion de l'interface admin Pi-hole</figcaption>
+    </figure>
+    <figure>
+      <img src="img/homelab/02-pihole-home.png" alt="Page d'accueil Pi-hole">
+      <figcaption>La page d'accueil Pi-hole, avant l'authentification, expose des informations basiques</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Sécurité et accès depuis l'extérieur</h2>
+    <p>
+      Je ne publie aucun service directement sur Internet, c'est trop risqué. Pour accéder à mes services à l'extérieur, je passe par un VPN <b>WireGuard</b> qui tourne sur un Raspberry Pi en DMZ chez moi. Une fois connecté au VPN, j'accède aux services en local.
+    </p>
+    <p>
+      Pour les services que je veux accessibles publiquement (très rares), je passe par un Cloudflare Tunnel. Pas d'ouverture de port, pas d'IP exposée.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'apprends en continu</h2>
+    <p>
+      Tout. Sérieusement. Chaque service installé m'a appris quelque chose : la gestion des certificats avec Let's Encrypt, la configuration LDAP, la mise en place d'un reverse proxy, la lecture de logs, la sauvegarde correcte des bases de données, la sécurisation d'un serveur exposé.
+    </p>
+    <p>
+      Le homelab c'est un budget important au début, mais sur deux ans c'est largement amorti par tout ce que j'ai appris dessus. Je le recommande à toute personne qui veut faire de l'admin sys au-delà des cours.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* page projet */
+
+.projet-page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 60px 30px 40px;
+}
+
+.retour {
+  display: inline-block;
+  color: #6b6258;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+  text-decoration: none;
+}
+
+.retour:hover { color: #2d4f8e; text-decoration: none; }
+
+
+/* en-tête de la page */
+.projet-tete {
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.12);
+  margin-bottom: 40px;
+}
+
+.meta-projet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 0.82rem;
+  color: #6b6258;
+  margin-bottom: 18px;
+}
+
+.meta-projet span:not(:last-child)::after {
+  content: " · ";
+  color: #c0b8a8;
+  margin-left: 14px;
+}
+
+.projet-tete h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1a1612;
+  margin-bottom: 14px;
+}
+
+.sous-titre {
+  font-size: 1.1rem;
+  color: #4a4338;
+  margin-bottom: 22px;
+  max-width: 60ch;
+}
+
+.techno-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.techno-pills span {
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: #e3eaf2;
+  color: #4a5870;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+
+/* blocs */
+.bloc-projet {
+  margin-bottom: 40px;
+}
+
+.bloc-projet h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1612;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.1);
+}
+
+.bloc-projet p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #2a2520;
+  margin-bottom: 14px;
+}
+
+.bloc-projet code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.88em;
+  background: #fafcfd;
+  border: 1px solid rgba(26, 22, 18, 0.1);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: #2d4f8e;
+}
+
+
+/* puces */
+.puces {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0;
+}
+
+.puces li {
+  position: relative;
+  padding: 6px 0 6px 20px;
+  font-size: 0.97rem;
+  color: #2a2520;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.06);
+}
+
+.puces li:last-child { border: 0; }
+
+.puces li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  color: #2d4f8e;
+}
+
+
+/* tableaux compa */
+.compa {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+  margin: 14px 0;
+  background: #fafcfd;
+  border: 1px solid rgba(26, 22, 18, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.compa thead { background: #ecf1f5; }
+
+.compa th {
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1a1612;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.1);
+}
+
+.compa td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.06);
+  color: #4a4338;
+}
+
+.compa tbody tr:last-child td { border: 0; }
+
+
+/* figures */
+figure {
+  margin: 24px 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+  border: 1px solid rgba(26, 22, 18, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  padding: 6px;
+}
+
+figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #6b6258;
+  font-style: italic;
+}
+
+
+/* livrables */
+.livrables {
+  background: #fafcfd;
+  border: 1px solid rgba(26, 22, 18, 0.08);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+.livrables h2 { border-bottom: 0; padding-bottom: 0; }
+
+.livrables .voir-projet {
+  margin-top: 18px;
+}
+
+
+/* puce de compétence à côté du titre h2 */
+.bloc-projet h2 .puce-comp {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 10px;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+
+
+/* responsive */
+@media (max-width: 640px) {
+  .projet-page { padding: 40px 22px; }
+  .compa { font-size: 0.85rem; }
+  .compa th, .compa td { padding: 9px 10px; }
+}

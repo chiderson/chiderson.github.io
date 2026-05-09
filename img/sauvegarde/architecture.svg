@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 13px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .label { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .prod { fill: #ecf1f5; stroke: #2d4f8e; stroke-width: 2; rx: 8; }
+      .copie { fill: #ecf3eb; stroke: #7dc36d; stroke-width: 1.5; rx: 8; }
+      .externe { fill: #fff7e2; stroke: #e8b94a; stroke-width: 1.5; rx: 8; }
+      .arrow { stroke: #2d4f8e; stroke-width: 2; fill: none; marker-end: url(#tri); }
+      .arrow-hebdo { stroke: #c9a55e; stroke-width: 2; fill: none; stroke-dasharray: 5 4; marker-end: url(#tri-or); }
+    </style>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2d4f8e"/>
+    </marker>
+    <marker id="tri-or" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#c9a55e"/>
+    </marker>
+  </defs>
+  <rect width="820" height="480" fill="#fff"/>
+
+  <text class="titre" x="410" y="28" text-anchor="middle">Stratégie de sauvegarde 3-2-1</text>
+
+  <!-- Site principal -->
+  <rect x="40" y="60" width="500" height="320" fill="none" stroke="#1a1612" stroke-width="1" stroke-dasharray="6 4" rx="10"/>
+  <text class="titre" x="60" y="84">Site principal</text>
+
+  <!-- Production -->
+  <rect class="prod" x="80" y="120" width="200" height="100"/>
+  <text class="titre" x="180" y="146" text-anchor="middle">Production</text>
+  <text class="ss-titre" x="180" y="162" text-anchor="middle">3 VMs sur ESXi</text>
+  <text class="legende" x="180" y="180" text-anchor="middle">SRV-AD · SRV-FILES</text>
+  <text class="legende" x="180" y="196" text-anchor="middle">SRV-WEB</text>
+  <text class="legende" x="180" y="210" text-anchor="middle">Données originales</text>
+
+  <!-- NAS Synology -->
+  <rect class="copie" x="320" y="120" width="200" height="100"/>
+  <text class="titre" x="420" y="146" text-anchor="middle">NAS Synology</text>
+  <text class="ss-titre" x="420" y="162" text-anchor="middle">Veeam Backup</text>
+  <text class="legende" x="420" y="180" text-anchor="middle">Quotidien à 23h</text>
+  <text class="legende" x="420" y="196" text-anchor="middle">Rétention 14 jours</text>
+  <text class="legende" x="420" y="210" text-anchor="middle">Copie 1 (sur place)</text>
+
+  <line class="arrow" x1="280" y1="170" x2="320" y2="170"/>
+  <text class="label" x="300" y="160" text-anchor="middle">backup</text>
+
+  <!-- Disque externe USB -->
+  <rect class="copie" x="170" y="270" width="220" height="80"/>
+  <text class="titre" x="280" y="296" text-anchor="middle">Disque externe USB</text>
+  <text class="ss-titre" x="280" y="312" text-anchor="middle">chiffré LUKS</text>
+  <text class="legende" x="280" y="328" text-anchor="middle">Hebdomadaire (samedi)</text>
+  <text class="legende" x="280" y="344" text-anchor="middle">Copie 2 (support différent)</text>
+
+  <line class="arrow-hebdo" x1="420" y1="220" x2="350" y2="270"/>
+
+  <!-- Site externalisé -->
+  <rect x="580" y="60" width="220" height="320" fill="none" stroke="#c9a55e" stroke-width="1.5" stroke-dasharray="6 4" rx="10"/>
+  <text class="titre" x="600" y="84">Site externalisé</text>
+  <text class="ss-titre" x="600" y="100">(domicile responsable)</text>
+
+  <!-- Disque externalisé -->
+  <rect class="externe" x="600" y="160" width="180" height="100"/>
+  <text class="titre" x="690" y="186" text-anchor="middle">Disque externe</text>
+  <text class="ss-titre" x="690" y="202" text-anchor="middle">copie hors site</text>
+  <text class="legende" x="690" y="220" text-anchor="middle">Emporté chaque samedi</text>
+  <text class="legende" x="690" y="236" text-anchor="middle">Copie 3 (hors site)</text>
+  <text class="legende" x="690" y="250" text-anchor="middle">4 disques en rotation</text>
+
+  <line class="arrow-hebdo" x1="390" y1="310" x2="600" y2="220"/>
+  <text class="label" x="500" y="280" text-anchor="middle">externalisation</text>
+
+  <!-- Légende 3-2-1 -->
+  <rect x="40" y="410" width="760" height="60" fill="#fafcfd" stroke="#e0dccf" rx="6"/>
+  <text class="titre" x="60" y="432">Règle 3-2-1 appliquée</text>
+  <text class="legende" x="60" y="450">3 copies des données — 2 supports différents (NAS + disque USB) — 1 copie hors site</text>
+  <text class="legende" x="60" y="464">Test de restauration mensuel le premier lundi de chaque mois, journal documenté</text>
+</svg>

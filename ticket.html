@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helpdesk osTicket — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet personnel · 2024</span>
+      <span>Découverte ITSM</span>
+    </div>
+    <h1>Mise en place d'un helpdesk avec osTicket</h1>
+    <p class="sous-titre">
+      Déploiement d'un système de gestion de tickets open source sur Debian, pour comprendre le fonctionnement d'un service desk avant d'attaquer GLPI.
+    </p>
+    <div class="techno-pills">
+      <span>osTicket 1.18</span>
+      <span>Debian 12</span>
+      <span>Apache</span>
+      <span>MariaDB</span>
+      <span>PHP 8.1</span>
+      <span>IMAP / Postfix</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>Le flux d'un ticket</h2>
+    <figure>
+      <img src="img/ticket/architecture.svg" alt="Flux d'un ticket dans osTicket">
+      <figcaption>Du mail utilisateur jusqu'à la réponse de l'agent, en passant par Postfix et le routage osTicket</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Pourquoi osTicket d'abord</h2>
+    <p>
+      Avant de découvrir GLPI dans le cadre de mon alternance, j'ai voulu comprendre ce qu'était un système de gestion de tickets en partant d'un outil simple et focalisé sur cette seule fonction. osTicket est libre (GPLv2), léger, francisé, et s'installe sur n'importe quelle pile LAMP en quelques minutes. C'est l'idéal pour apprendre les concepts ITIL de base sans se noyer dans les options.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Installation</h2>
+    <h3>VM Debian 12</h3>
+    <p>
+      Une VM Debian 12 sur mon homelab Proxmox, 2 vCPU, 2 Go de RAM, 20 Go de disque. IP statique sur le réseau du labo. Hostname <code>tickets.lab.local</code>.
+    </p>
+    <h3>Pile LAMP</h3>
+    <p>
+      Installation classique : Apache 2.4, MariaDB 10.11, PHP 8.1 avec les extensions nécessaires (mysql, gd, mbstring, intl, imap, xml). Sécurisation de MariaDB avec <code>mysql_secure_installation</code>, création d'une base et d'un user dédiés.
+    </p>
+    <h3>osTicket lui-même</h3>
+    <p>
+      Téléchargement de la dernière version stable, dépôt dans <code>/var/www/tickets</code>, ajustement des permissions, création du VirtualHost Apache. L'assistant web démarre tout seul ensuite et guide la configuration de base.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Configuration des files d'attente</h2>
+    <p>
+      J'ai créé trois files (<i>queues</i> dans osTicket) pour simuler un service IT d'une PME :
+    </p>
+    <ul class="puces">
+      <li><b>Support général</b> — pour les questions courantes (mot de passe oublié, accès partage)</li>
+      <li><b>Support technique</b> — pour les pannes matérielles ou logicielles plus complexes</li>
+      <li><b>Demandes</b> — pour les nouvelles installations, créations de compte, etc.</li>
+    </ul>
+    <p>
+      Chaque file a son groupe d'agents dédié, sa priorité par défaut et son SLA (Service Level Agreement). Par exemple, un ticket dans "Support général" doit recevoir une première réponse en moins de 4 heures ouvrées.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Intégration mail entrante et sortante</h2>
+    <p>
+      L'intérêt principal d'osTicket c'est la création automatique de tickets depuis les mails reçus. J'ai configuré :
+    </p>
+    <ul class="puces">
+      <li>Une boîte mail <code>support@lab.local</code> côté serveur Postfix</li>
+      <li>osTicket récupère les nouveaux mails via IMAP toutes les 5 minutes (<code>fetch.php</code> en cron)</li>
+      <li>Chaque mail crée un ticket, et chaque réponse au ticket repart en mail au demandeur</li>
+    </ul>
+    <p>
+      Au passage j'ai bien révisé les protocoles de mail (SMTP pour envoyer, IMAP pour relever, POP3 plus rarement). Comprendre ce qui se passe entre deux serveurs mail, c'est utile pour quand on doit débugger un dysfonctionnement.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Comparaison rapide avec GLPI</h2>
+    <table class="compa">
+      <thead>
+        <tr><th>Critère</th><th>osTicket</th><th>GLPI</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Périmètre</td><td>Tickets uniquement</td><td>Tickets + inventaire + contrats + plus</td></tr>
+        <tr><td>Mise en place</td><td>30 minutes</td><td>2 à 3 heures (avec AD/LDAP)</td></tr>
+        <tr><td>Personnalisation</td><td>Limitée mais suffisante</td><td>Très poussée</td></tr>
+        <tr><td>Public cible</td><td>PME ou service IT léger</td><td>PME à grande entreprise</td></tr>
+      </tbody>
+    </table>
+    <p>
+      En résumé, osTicket fait très bien sa seule mission, mais dès qu'on a besoin de gérer le matériel et les licences, GLPI devient incontournable.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'ai appris</h2>
+    <p>
+      Le concept de SLA, c'est plus important que je ne pensais. Sans engagement de délai, les tickets pourrissent dans la file. Avec un SLA bien réglé, l'outil te rappelle à l'ordre, et tu priorises naturellement les vieux tickets en retard plutôt que les nouveaux qui font du bruit.
+    </p>
+    <p>
+      Je me suis aussi rendu compte que la qualité de la réponse compte autant que la rapidité. Un ticket résolu en deux heures avec une explication confuse, c'est moins utile qu'une réponse claire en six heures.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

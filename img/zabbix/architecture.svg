@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 500" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 13px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .label { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .server { fill: #ecf1f5; stroke: #2d4f8e; stroke-width: 2; rx: 8; }
+      .agent { fill: #fafcfd; stroke: #c0b8a8; stroke-width: 1; rx: 6; }
+      .alert { fill: #fdeae9; stroke: #e07b7b; stroke-width: 1; rx: 6; }
+      .arrow { stroke: #2d4f8e; stroke-width: 1.5; fill: none; }
+      .alert-arrow { stroke: #c63232; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+  <rect width="820" height="500" fill="#fff"/>
+
+  <text class="titre" x="410" y="28" text-anchor="middle">Architecture de supervision Zabbix + Grafana</text>
+
+  <!-- Serveur Zabbix au centre -->
+  <rect class="server" x="320" y="180" width="180" height="100"/>
+  <text class="titre" x="410" y="208" text-anchor="middle">Serveur Zabbix</text>
+  <text class="ss-titre" x="410" y="225" text-anchor="middle">Debian 12 + MariaDB</text>
+  <text class="legende" x="410" y="243" text-anchor="middle">192.168.1.50</text>
+  <text class="legende" x="410" y="259" text-anchor="middle">Frontend PHP / Apache</text>
+  <text class="legende" x="410" y="273" text-anchor="middle">Port 10051 (server)</text>
+
+  <!-- Agents -->
+  <rect class="agent" x="40" y="80" width="170" height="50"/>
+  <text class="titre" x="125" y="100" text-anchor="middle">SRV-WIN01</text>
+  <text class="legende" x="125" y="116" text-anchor="middle">Agent Zabbix · Windows</text>
+
+  <rect class="agent" x="40" y="160" width="170" height="50"/>
+  <text class="titre" x="125" y="180" text-anchor="middle">SRV-LIN01</text>
+  <text class="legende" x="125" y="196" text-anchor="middle">Agent Zabbix · Debian</text>
+
+  <rect class="agent" x="40" y="240" width="170" height="50"/>
+  <text class="titre" x="125" y="260" text-anchor="middle">SRV-LIN02</text>
+  <text class="legende" x="125" y="276" text-anchor="middle">Agent Zabbix · Debian</text>
+
+  <rect class="agent" x="40" y="320" width="170" height="50"/>
+  <text class="titre" x="125" y="340" text-anchor="middle">SW-CISCO01</text>
+  <text class="legende" x="125" y="356" text-anchor="middle">SNMP v2c · Cisco</text>
+
+  <!-- Liens vers Zabbix -->
+  <line class="arrow" x1="210" y1="105" x2="320" y2="200"/>
+  <line class="arrow" x1="210" y1="185" x2="320" y2="215"/>
+  <line class="arrow" x1="210" y1="265" x2="320" y2="240"/>
+  <line class="arrow" x1="210" y1="345" x2="320" y2="260"/>
+
+  <text class="label" x="265" y="158" text-anchor="middle">port 10050</text>
+  <text class="label" x="265" y="222" text-anchor="middle">port 10050</text>
+  <text class="label" x="265" y="290" text-anchor="middle">port 10050</text>
+  <text class="label" x="265" y="320" text-anchor="middle">SNMP/161</text>
+
+  <!-- Grafana -->
+  <rect class="server" x="600" y="100" width="170" height="60" fill="#fff7e2" stroke="#e8b94a"/>
+  <text class="titre" x="685" y="124" text-anchor="middle">Grafana</text>
+  <text class="legende" x="685" y="140" text-anchor="middle">Dashboards visuels</text>
+  <text class="legende" x="685" y="154" text-anchor="middle">Port 3000</text>
+
+  <line class="arrow" x1="500" y1="210" x2="600" y2="140"/>
+  <text class="label" x="555" y="170" text-anchor="middle">datasource</text>
+
+  <!-- Mail alert -->
+  <rect class="alert" x="600" y="240" width="170" height="60"/>
+  <text class="titre" x="685" y="264" text-anchor="middle">Postfix</text>
+  <text class="legende" x="685" y="280" text-anchor="middle">Alertes mail</text>
+  <text class="legende" x="685" y="294" text-anchor="middle">SMTP</text>
+
+  <line class="alert-arrow" x1="500" y1="250" x2="600" y2="265"/>
+  <text class="label" x="555" y="252" text-anchor="middle" fill="#c63232">trigger</text>
+
+  <!-- Browser admin -->
+  <rect class="agent" x="320" y="370" width="180" height="50"/>
+  <text class="titre" x="410" y="390" text-anchor="middle">Console admin</text>
+  <text class="legende" x="410" y="406" text-anchor="middle">Navigateur sur le poste de l'étudiant</text>
+
+  <line class="arrow" x1="410" y1="370" x2="410" y2="280"/>
+  <text class="label" x="430" y="335" text-anchor="middle">HTTPS/443</text>
+
+  <!-- Légende -->
+  <rect x="40" y="430" width="740" height="50" fill="#fafcfd" stroke="#e0dccf" rx="6"/>
+  <text class="legende" x="60" y="450">Le serveur Zabbix interroge ses agents et le switch toutes les minutes, stocke les données en base, déclenche</text>
+  <text class="legende" x="60" y="466">des alertes mail si les seuils sont dépassés et expose les données à Grafana pour les dashboards plus jolis.</text>
+</svg>

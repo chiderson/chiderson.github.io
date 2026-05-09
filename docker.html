@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conteneurisation Docker — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet personnel · 2024 — en cours</span>
+      <span>Homelab</span>
+    </div>
+    <h1>Conteneurisation des services du homelab</h1>
+    <p class="sous-titre">
+      Migration des services persos vers Docker, pilotés par docker-compose et accompagnés de Portainer pour la supervision.
+    </p>
+    <div class="techno-pills">
+      <span>Docker 29</span>
+      <span>docker-compose</span>
+      <span>Portainer CE</span>
+      <span>Nginx Alpine</span>
+      <span>Watchtower</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>Pourquoi conteneuriser</h2>
+    <p>
+      Sur mon homelab, je faisais tourner chaque service dans sa propre VM Proxmox. C'était propre mais lourd : chaque VM mange 1 à 2 Go de RAM rien que pour faire tourner Linux. Sur trois mini-PC j'arrivais à saturation au bout de douze services.
+    </p>
+    <p>
+      Docker permet de faire tourner plusieurs services dans des conteneurs très légers (juste l'application et ses dépendances, pas un OS complet à chaque fois). Et c'est trivial à redéployer : un fichier <code>docker-compose.yml</code>, une commande, et tout repart à l'identique.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture</h2>
+    <figure>
+      <img src="img/docker/architecture.svg" alt="Architecture Docker du homelab">
+      <figcaption>Architecture du déploiement : 4 conteneurs sur un réseau bridge dédié, exposés au PC hôte par les ports</figcaption>
+    </figure>
+    <p>
+      Les quatre conteneurs partagent un réseau Docker dédié (<code>chiderson-homelab</code>) et sont exposés au PC hôte par des ports différents.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le fichier docker-compose</h2>
+    <p>
+      Tout est dans un seul fichier que je versionne sur mon GitLab privé. Pour ajouter un service, je rajoute un bloc, je tape <code>docker compose up -d</code>, et c'est en ligne.
+    </p>
+<pre style="background:#1d1f21;color:#c5c8c6;padding:18px 20px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.55;overflow-x:auto;margin:18px 0;">
+<span style="color:#b294bb">name</span>: chiderson-homelab
+
+<span style="color:#b294bb">services</span>:
+
+  <span style="color:#81a2be">portainer</span>:
+    <span style="color:#b294bb">image</span>: portainer/portainer-ce:latest
+    <span style="color:#b294bb">restart</span>: unless-stopped
+    <span style="color:#b294bb">ports</span>: [<span style="color:#b5bd68">"9000:9000"</span>]
+    <span style="color:#b294bb">volumes</span>:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    <span style="color:#b294bb">networks</span>: [homelab]
+
+  <span style="color:#81a2be">web</span>:
+    <span style="color:#b294bb">image</span>: nginx:alpine
+    <span style="color:#b294bb">ports</span>: [<span style="color:#b5bd68">"8080:80"</span>]
+    <span style="color:#b294bb">volumes</span>: [<span style="color:#b5bd68">"./html:/usr/share/nginx/html:ro"</span>]
+    <span style="color:#b294bb">networks</span>: [homelab]
+
+  <span style="color:#81a2be">whoami</span>:
+    <span style="color:#b294bb">image</span>: traefik/whoami
+    <span style="color:#b294bb">ports</span>: [<span style="color:#b5bd68">"8081:80"</span>]
+    <span style="color:#b294bb">networks</span>: [homelab]
+
+  <span style="color:#81a2be">watchtower</span>:
+    <span style="color:#b294bb">image</span>: containrrr/watchtower
+    <span style="color:#b294bb">volumes</span>: [<span style="color:#b5bd68">"/var/run/docker.sock:/var/run/docker.sock"</span>]
+    <span style="color:#b294bb">networks</span>: [homelab]
+</pre>
+    <p>
+      Chaque service expose son port, monte ses volumes éventuels, et rejoint le réseau commun. Watchtower est branché sur la socket Docker pour pouvoir mettre à jour automatiquement les autres conteneurs.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le déploiement</h2>
+    <p>
+      J'ai pris cette stack en exemple pour ce dossier : je l'ai vraiment fait tourner, voici les preuves de ce que ça donne en console.
+    </p>
+    <figure>
+      <img src="img/docker/04-console.png" alt="Sortie console docker compose">
+      <figcaption>La sortie de <code>docker compose up -d</code> et <code>docker compose ps</code> après démarrage</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Les services qui tournent</h2>
+    <h3>Le site web (nginx)</h3>
+    <p>
+      Le conteneur nginx sert une page HTML statique depuis un volume monté. C'est l'équivalent d'un site personnel. Accessible sur le port 8080.
+    </p>
+    <figure>
+      <img src="img/docker/01-nginx.png" alt="Page servie par nginx">
+      <figcaption>La page d'accueil servie par le conteneur nginx, capture du navigateur</figcaption>
+    </figure>
+
+    <h3>Whoami (debug réseau)</h3>
+    <p>
+      Whoami est un petit service Go qui répond avec les en-têtes HTTP de la requête, son hostname dans le conteneur, et l'IP cliente. Très utile pour vérifier qu'un reverse proxy fait bien son travail ou que le réseau Docker se comporte comme prévu.
+    </p>
+    <figure>
+      <img src="img/docker/02-whoami.png" alt="Réponse de whoami">
+      <figcaption>La réponse de whoami : on voit le hostname du conteneur, l'IP, et les en-têtes</figcaption>
+    </figure>
+
+    <h3>Portainer (gestion graphique)</h3>
+    <p>
+      Portainer est une interface web qui permet de tout gérer à la souris : conteneurs, images, volumes, réseaux, logs en temps réel. Pratique pour vérifier l'état d'un service en deux clics au lieu de taper plusieurs commandes.
+    </p>
+    <figure>
+      <img src="img/docker/03-portainer.png" alt="Interface Portainer">
+      <figcaption>L'écran de première connexion à Portainer après démarrage</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Les pièges rencontrés</h2>
+    <h3>Permissions de volumes</h3>
+    <p>
+      Au début, certains conteneurs refusaient d'écrire dans leurs volumes parce que l'utilisateur dans le conteneur n'avait pas les droits sur le dossier hôte. La solution c'est de bien gérer le <code>chown</code> au niveau du dossier hôte ou d'utiliser <code>user:</code> dans le compose pour fixer l'UID du process.
+    </p>
+    <h3>Watchtower sur Docker Desktop macOS</h3>
+    <p>
+      Watchtower a besoin d'accéder à la socket Docker. Sur Linux c'est direct, sur macOS Docker Desktop le passe à travers une VM. Le conteneur a redémarré en boucle quand je l'ai testé. Sur un homelab Linux il fonctionne sans souci.
+    </p>
+    <h3>Le ménage des images</h3>
+    <p>
+      Au bout de quelques mois, le disque se remplit d'images obsolètes. <code>docker image prune -a</code> régulièrement, et limiter Watchtower à ne garder qu'une seule version en arrière.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'ai appris</h2>
+    <p>
+      La différence entre une image et un conteneur, je la confondais avant. L'image c'est le modèle, le conteneur c'est l'exécution. On peut lancer dix conteneurs depuis la même image.
+    </p>
+    <p>
+      Et Docker n'est pas une solution magique. Il faut comprendre les volumes, les réseaux, les permissions. Sinon on a juste déplacé la complexité d'un endroit à un autre. Mais une fois compris, c'est extrêmement puissant pour faire tourner des services rapidement.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 14px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .label-bord { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .conteneur { fill: #fdfaf2; stroke: #c0b8a8; stroke-width: 1; rx: 8; }
+      .docker-host { fill: #f4ece0; stroke: #b8a98e; stroke-dasharray: 4 3; stroke-width: 1.5; rx: 10; }
+      .pc { fill: #ecf1f5; stroke: #2d4f8e; stroke-width: 1.5; rx: 8; }
+      .net { stroke: #2d4f8e; stroke-width: 1.5; fill: none; }
+      .net-dim { stroke: #c9b582; stroke-width: 1; fill: none; stroke-dasharray: 3 3; }
+    </style>
+  </defs>
+
+  <rect width="800" height="480" fill="#fff"/>
+
+  <!-- Navigateur (PC hôte) -->
+  <rect class="pc" x="40" y="40" width="200" height="80"/>
+  <text class="titre" x="140" y="70" text-anchor="middle">Navigateur</text>
+  <text class="ss-titre" x="140" y="88" text-anchor="middle">Chrome / Firefox</text>
+  <text class="ss-titre" x="140" y="103" text-anchor="middle">Sur le PC hôte (macOS)</text>
+
+  <!-- flèches navigateur -> conteneurs -->
+  <line class="net" x1="240" y1="80" x2="320" y2="80"/>
+  <text class="label-bord" x="280" y="74" text-anchor="middle">HTTP</text>
+  <polygon points="318,76 326,80 318,84" fill="#2d4f8e"/>
+
+  <!-- Docker host -->
+  <rect class="docker-host" x="320" y="30" width="450" height="420"/>
+  <text class="titre" x="545" y="55" text-anchor="middle">Docker Host (Docker Desktop)</text>
+  <text class="ss-titre" x="545" y="72" text-anchor="middle">macOS · 7,6 Go RAM · 10 vCPU</text>
+
+  <!-- Réseau homelab -->
+  <rect x="345" y="100" width="400" height="250" fill="none" stroke="#2d4f8e" stroke-width="1" stroke-dasharray="5 4" rx="6"/>
+  <text class="label-bord" x="365" y="116">Réseau Docker bridge : chiderson-homelab</text>
+
+  <!-- Conteneur Web (nginx) -->
+  <rect class="conteneur" x="365" y="135" width="170" height="65"/>
+  <text class="titre" x="450" y="158" text-anchor="middle">web</text>
+  <text class="ss-titre" x="450" y="174" text-anchor="middle">nginx:alpine</text>
+  <text class="legende" x="450" y="190" text-anchor="middle">port 8080 → 80</text>
+
+  <!-- Conteneur Whoami -->
+  <rect class="conteneur" x="555" y="135" width="170" height="65"/>
+  <text class="titre" x="640" y="158" text-anchor="middle">whoami</text>
+  <text class="ss-titre" x="640" y="174" text-anchor="middle">traefik/whoami</text>
+  <text class="legende" x="640" y="190" text-anchor="middle">port 8081 → 80</text>
+
+  <!-- Conteneur Portainer -->
+  <rect class="conteneur" x="365" y="220" width="170" height="65"/>
+  <text class="titre" x="450" y="243" text-anchor="middle">portainer</text>
+  <text class="ss-titre" x="450" y="259" text-anchor="middle">portainer-ce</text>
+  <text class="legende" x="450" y="275" text-anchor="middle">port 9000 → 9000</text>
+
+  <!-- Conteneur Watchtower -->
+  <rect class="conteneur" x="555" y="220" width="170" height="65"/>
+  <text class="titre" x="640" y="243" text-anchor="middle">watchtower</text>
+  <text class="ss-titre" x="640" y="259" text-anchor="middle">containrrr/watchtower</text>
+  <text class="legende" x="640" y="275" text-anchor="middle">surveille les images</text>
+
+  <!-- Volume nommé -->
+  <rect x="365" y="305" width="170" height="36" fill="#fff" stroke="#c9b582" stroke-width="1" rx="4"/>
+  <text class="titre" x="450" y="320" text-anchor="middle">portainer_data</text>
+  <text class="legende" x="450" y="333" text-anchor="middle">volume Docker persistant</text>
+
+  <!-- Socket Docker -->
+  <rect x="555" y="305" width="170" height="36" fill="#fff" stroke="#c9b582" stroke-width="1" rx="4"/>
+  <text class="titre" x="640" y="320" text-anchor="middle">/var/run/docker.sock</text>
+  <text class="legende" x="640" y="333" text-anchor="middle">monté en lecture/écriture</text>
+
+  <!-- Lignes de relation -->
+  <line class="net-dim" x1="450" y1="285" x2="450" y2="305"/>
+  <line class="net-dim" x1="640" y1="285" x2="640" y2="305"/>
+
+  <!-- Légende du bas -->
+  <rect x="345" y="380" width="400" height="50" fill="#fafcfd" stroke="#e0dccf" rx="4"/>
+  <text class="legende" x="360" y="400">Tous les conteneurs sont sur le même réseau Docker bridge,</text>
+  <text class="legende" x="360" y="414">peuvent se parler par leur nom de service, et sont exposés au PC</text>
+  <text class="legende" x="360" y="428">hôte par les ports déclarés dans le docker-compose.yml.</text>
+
+</svg>

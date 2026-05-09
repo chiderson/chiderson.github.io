@@ -1,0 +1,58 @@
+name: chiderson-homelab
+
+services:
+
+  # Portainer : interface web pour gérer Docker
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - homelab
+
+  # Nginx : page d'accueil simple, sert de "site web personnel"
+  web:
+    image: nginx:alpine
+    container_name: web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+    networks:
+      - homelab
+
+  # Whoami : petit service qui affiche les requêtes reçues, utile pour debug
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    networks:
+      - homelab
+
+  # Watchtower : met à jour automatiquement les autres conteneurs
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=86400
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    driver: bridge
+
+volumes:
+  portainer_data:

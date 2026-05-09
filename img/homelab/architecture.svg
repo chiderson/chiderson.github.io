@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 540" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .titre { font-size: 13px; font-weight: 600; fill: #1a1612; }
+      .ss-titre { font-size: 11px; fill: #6b6258; }
+      .legende { font-size: 10px; fill: #6b6258; }
+      .label { font-size: 10px; fill: #2d4f8e; font-weight: 500; }
+      .nœud { fill: #ecf1f5; stroke: #2d4f8e; stroke-width: 2; rx: 8; }
+      .vm { fill: #fafcfd; stroke: #c0b8a8; stroke-width: 1; rx: 4; }
+      .ext { fill: #fff7e2; stroke: #e8b94a; stroke-width: 1.5; rx: 6; }
+      .net { stroke: #1a1612; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+  <rect width="820" height="540" fill="#fff"/>
+
+  <text class="titre" x="410" y="28" text-anchor="middle">Mon homelab — cluster Proxmox 3 nœuds</text>
+
+  <!-- Box internet -->
+  <rect class="ext" x="60" y="60" width="160" height="50"/>
+  <text class="titre" x="140" y="80" text-anchor="middle">Box FAI</text>
+  <text class="legende" x="140" y="96" text-anchor="middle">Internet · DHCP</text>
+
+  <!-- Switch -->
+  <rect x="320" y="60" width="180" height="50" fill="#fdfaf2" stroke="#b8a98e" stroke-width="1.5" rx="4"/>
+  <text class="titre" x="410" y="80" text-anchor="middle">Switch Netgear 8 ports</text>
+  <text class="legende" x="410" y="96" text-anchor="middle">Gigabit · VLAN 1</text>
+
+  <!-- Onduleur APC -->
+  <rect class="ext" x="600" y="60" width="160" height="50"/>
+  <text class="titre" x="680" y="80" text-anchor="middle">Onduleur APC</text>
+  <text class="legende" x="680" y="96" text-anchor="middle">Backup électrique</text>
+
+  <!-- liens -->
+  <line class="net" x1="220" y1="85" x2="320" y2="85"/>
+  <line class="net" x1="500" y1="85" x2="600" y2="85"/>
+
+  <!-- Cluster Proxmox -->
+  <rect x="40" y="140" width="740" height="290" fill="none" stroke="#2d4f8e" stroke-width="1.5" stroke-dasharray="5 4" rx="10"/>
+  <text class="titre" x="60" y="162">Cluster Proxmox VE 8.x</text>
+
+  <!-- Nœud 1 -->
+  <rect class="nœud" x="80" y="190" width="200" height="200"/>
+  <text class="titre" x="180" y="212" text-anchor="middle">Nœud 1</text>
+  <text class="ss-titre" x="180" y="228" text-anchor="middle">Lenovo ThinkCentre</text>
+  <text class="legende" x="180" y="244" text-anchor="middle">i5-8500T · 32 Go · 1 To</text>
+
+  <rect class="vm" x="100" y="260" width="160" height="22"/>
+  <text class="legende" x="180" y="276" text-anchor="middle">Nextcloud</text>
+  <rect class="vm" x="100" y="288" width="160" height="22"/>
+  <text class="legende" x="180" y="304" text-anchor="middle">GitLab</text>
+  <rect class="vm" x="100" y="316" width="160" height="22"/>
+  <text class="legende" x="180" y="332" text-anchor="middle">Vaultwarden</text>
+  <rect class="vm" x="100" y="344" width="160" height="22"/>
+  <text class="legende" x="180" y="360" text-anchor="middle">Wazuh</text>
+
+  <!-- Nœud 2 -->
+  <rect class="nœud" x="310" y="190" width="200" height="200"/>
+  <text class="titre" x="410" y="212" text-anchor="middle">Nœud 2</text>
+  <text class="ss-titre" x="410" y="228" text-anchor="middle">Dell OptiPlex Micro</text>
+  <text class="legende" x="410" y="244" text-anchor="middle">i5-7500T · 16 Go · 500 Go</text>
+
+  <rect class="vm" x="330" y="260" width="160" height="22"/>
+  <text class="legende" x="410" y="276" text-anchor="middle">Pi-hole (DNS)</text>
+  <rect class="vm" x="330" y="288" width="160" height="22"/>
+  <text class="legende" x="410" y="304" text-anchor="middle">Docker host (Traefik+...)</text>
+  <rect class="vm" x="330" y="316" width="160" height="22"/>
+  <text class="legende" x="410" y="332" text-anchor="middle">Home Assistant</text>
+  <rect class="vm" x="330" y="344" width="160" height="22"/>
+  <text class="legende" x="410" y="360" text-anchor="middle">Jellyfin</text>
+
+  <!-- Nœud 3 -->
+  <rect class="nœud" x="540" y="190" width="200" height="200"/>
+  <text class="titre" x="640" y="212" text-anchor="middle">Nœud 3</text>
+  <text class="ss-titre" x="640" y="228" text-anchor="middle">HP ProDesk Mini</text>
+  <text class="legende" x="640" y="244" text-anchor="middle">i5-6500T · 16 Go · 256 Go</text>
+
+  <rect class="vm" x="560" y="260" width="160" height="22"/>
+  <text class="legende" x="640" y="276" text-anchor="middle">PBS — backups</text>
+  <rect class="vm" x="560" y="288" width="160" height="22"/>
+  <text class="legende" x="640" y="304" text-anchor="middle">VM de test (jetable)</text>
+  <rect class="vm" x="560" y="316" width="160" height="22"/>
+  <text class="legende" x="640" y="332" text-anchor="middle">WireGuard VPN</text>
+
+  <!-- Disque externe -->
+  <rect class="ext" x="40" y="450" width="220" height="60"/>
+  <text class="titre" x="150" y="474" text-anchor="middle">Disque externe USB 3.0</text>
+  <text class="legende" x="150" y="490" text-anchor="middle">Sauvegardes PBS</text>
+  <text class="legende" x="150" y="504" text-anchor="middle">Toutes les nuits</text>
+
+  <line class="net" x1="640" y1="390" x2="260" y2="450" stroke-dasharray="3 3"/>
+  <text class="label" x="500" y="430" text-anchor="middle">backup PBS</text>
+
+  <!-- Légende -->
+  <rect x="320" y="450" width="460" height="60" fill="#fafcfd" stroke="#e0dccf" rx="6"/>
+  <text class="legende" x="340" y="470">Cluster Proxmox 8 — stockage ZFS local par nœud (snapshots quotidiens),</text>
+  <text class="legende" x="340" y="486">migration à chaud d'un nœud à l'autre, accès externe via WireGuard,</text>
+  <text class="legende" x="340" y="502">pas d'exposition directe sur Internet (sauf services derrière Cloudflare Tunnel).</text>
+</svg>

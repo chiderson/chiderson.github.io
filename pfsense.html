@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pare-feu pfSense et VLAN — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Projet en équipe · 2025</span>
+      <span>BTS SIO SISR</span>
+      <span>3 personnes</span>
+    </div>
+    <h1>Pare-feu pfSense et segmentation VLAN</h1>
+    <p class="sous-titre">
+      Mise en place d'un pare-feu pfSense avec segmentation par VLAN et publication d'un service web via reverse proxy.
+    </p>
+    <div class="techno-pills">
+      <span>pfSense</span>
+      <span>VLAN 802.1Q</span>
+      <span>HAProxy</span>
+      <span>Cisco IOS</span>
+      <span>VirtualBox</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>Topologie du réseau</h2>
+    <figure>
+      <img src="img/pfsense/architecture.svg" alt="Topologie réseau avec VLANs">
+      <figcaption>Schéma : pfSense en routeur central, 4 VLANs séparés (LAN, DMZ, Wi-Fi, Admin)</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le contexte</h2>
+    <p>
+      Projet de groupe à trois. On nous a confié la mise en place d'un pare-feu de bordure sur une infrastructure de TP : un réseau LAN, une DMZ qui héberge un site web, un Wi-Fi invité qui n'a pas le droit d'accéder au LAN. Tout est virtualisé sur le poste de chacun, on synchronise via un dépôt Git pour les fichiers de config.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture</h2>
+    <p>
+      Quatre VLAN ont été créés sur le switch Cisco virtuel :
+    </p>
+    <table class="compa">
+      <thead>
+        <tr><th>VLAN</th><th>Usage</th><th>Sous-réseau</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>10</b></td><td>LAN — postes de travail</td><td>192.168.10.0/24</td></tr>
+        <tr><td><b>20</b></td><td>DMZ — serveurs publics</td><td>192.168.20.0/24</td></tr>
+        <tr><td><b>30</b></td><td>Wi-Fi invité</td><td>192.168.30.0/24</td></tr>
+        <tr><td><b>40</b></td><td>Admin</td><td>192.168.40.0/24</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Le pfSense est branché en routeur principal avec une interface par VLAN. Il fait aussi le NAT vers Internet et le filtrage strict entre les zones.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Les règles de filtrage</h2>
+    <p>
+      Politique <b>deny by default</b> sur tous les VLAN. Ensuite on n'autorise que ce qui est strictement nécessaire :
+    </p>
+    <ul class="puces">
+      <li>LAN → Internet : OK pour le web (80/443) et le DNS (53)</li>
+      <li>LAN → DMZ : seulement pour l'admin du site web (port 22 SSH)</li>
+      <li>DMZ → LAN : interdit complètement (principe de la DMZ)</li>
+      <li>Wi-Fi invité → Internet : OK</li>
+      <li>Wi-Fi invité → LAN/DMZ : interdit</li>
+      <li>Admin → tout : OK (mais cette VLAN ne contient que la machine de l'admin)</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Reverse proxy avec HAProxy</h2>
+    <p>
+      Le site web est en DMZ sur le port 8080. Plutôt que de l'exposer directement en NAT, on a installé HAProxy sur le pfSense (paquet officiel) qui écoute sur le port 443 public et redirige vers la DMZ. Avantages :
+    </p>
+    <ul class="puces">
+      <li>On peut faire du HTTPS au niveau du proxy avec un seul certificat</li>
+      <li>On peut héberger plusieurs sites derrière sans toucher au pare-feu</li>
+      <li>On peut bloquer des IP malveillantes au niveau du proxy</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que j'ai appris</h2>
+    <p>
+      L'ordre des règles de filtrage, c'est pas une option. Quand j'ai mis ma règle "deny everything" en premier, plus personne ne pouvait passer. Quand je l'ai mise en dernier, plus rien n'était bloqué. Évident sur le papier, beaucoup moins sur pfSense où on clique sur des boutons.
+    </p>
+    <p>
+      J'ai aussi compris pourquoi les pros font toujours une zone d'admin séparée. Si tu travailles depuis le LAN normal et que tu te coupes l'accès, tu cours physiquement en salle pour rebooter. Avec une zone admin séparée, tu peux t'auto-bloquer mais tu peux toujours te reconnecter par l'autre côté.
+    </p>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projet GLPI chez ALCONSEIL — Chiderson Laurenard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="projet.css">
+</head>
+<body>
+
+<header>
+  <span class="nom"></span>
+  <button class="burger" onclick="document.querySelector('header nav').classList.toggle('open')">≡</button>
+  <nav>
+    <a href="index.html#apropos">Parcours</a>
+    <a href="index.html#projets">Projets</a>
+    <a href="index.html#veille">Veille</a>
+    <a href="index.html#e5">E5</a>
+    <a href="index.html#e6">E6</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+
+<article class="projet-page">
+
+  <a href="index.html#projets" class="retour">← Retour aux projets</a>
+
+  <div class="projet-tete">
+    <div class="meta-projet">
+      <span>Alternance · 2025 — 2026</span>
+      <span>Épreuve E5 SISR</span>
+      <span>ALCONSEIL · Goussainville</span>
+    </div>
+    <h1>Solution de gestion de parc GLPI</h1>
+    <p class="sous-titre">
+      Mise en place d'une solution ITSM complète chez ALCONSEIL, dans
+      le cadre de mon alternance.
+    </p>
+    <div class="techno-pills">
+      <span>Ubuntu Server 24.04</span>
+      <span>Apache 2.4</span>
+      <span>MariaDB 11</span>
+      <span>PHP 8.3</span>
+      <span>GLPI 10</span>
+      <span>Samba 4 / AD</span>
+      <span>LDAP</span>
+      <span>UFW · Fail2ban · HTTPS</span>
+    </div>
+  </div>
+
+
+  <section class="bloc-projet">
+    <h2>Le contexte</h2>
+    <p>
+      ALCONSEIL est une jeune SAS de conseil créée début 2024, basée à
+      Goussainville. Quand j'ai commencé mon alternance en septembre 2025,
+      l'entreprise gérait son parc informatique dans un tableur Excel et les
+      demandes d'assistance arrivaient par mail ou par téléphone, sans
+      vraiment de suivi.
+    </p>
+    <p>
+      Cette manière de faire avait plein de limites : les inventaires
+      n'étaient jamais à jour, les licences se perdaient, et la sortie d'un
+      consultant devenait un casse-tête. Mon tuteur m'a donc confié la mise
+      en place d'une vraie solution ITSM avant que ça devienne ingérable.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Pourquoi GLPI</h2>
+    <p>
+      J'ai comparé plusieurs solutions avant de choisir. Voici ce qui a fait
+      pencher la balance.
+    </p>
+    <table class="compa">
+      <thead>
+        <tr><th>Solution</th><th>Modèle</th><th>Pourquoi pas</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>GLPI</b></td><td>Libre / GPL</td><td>—</td></tr>
+        <tr><td>OCS Inventory NG</td><td>Libre</td><td>Inventaire seulement, pas de helpdesk</td></tr>
+        <tr><td>Spiceworks</td><td>Gratuit</td><td>Hébergé, fermé, anglophone</td></tr>
+        <tr><td>ServiceNow</td><td>SaaS payant</td><td>Hors budget, surdimensionné pour une PME</td></tr>
+        <tr><td>Jira Service Management</td><td>SaaS / on-prem</td><td>Payant à partir de 3 utilisateurs</td></tr>
+      </tbody>
+    </table>
+    <p>
+      GLPI coche toutes les cases : gratuit, libre, francophone, complet,
+      mature, et avec une grosse communauté. Maintenu par Teclib' depuis
+      2003, sous licence GPL v3.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>L'architecture</h2>
+    <p>
+      Le déploiement réel ne pouvait pas se faire directement sur le réseau
+      de production. J'ai donc monté un laboratoire virtualisé sur mon poste
+      de travail avec deux machines virtuelles reliées par un réseau
+      host-only privé en <code>192.168.56.0/24</code>.
+    </p>
+    <figure>
+      <img src="img/glpi-011.png" alt="Schéma de l'architecture réseau">
+      <figcaption>Schéma 1 — Architecture réseau du laboratoire</figcaption>
+    </figure>
+    <p>
+      Deux VMs Ubuntu Server 24.04 LTS : <code>srv-glpi</code> qui héberge
+      GLPI et la pile LAMP, et <code>srv-ad</code> qui fait office de
+      contrôleur de domaine Active Directory avec Samba 4. Les deux sont
+      isolées d'Internet sauf pour les mises à jour, via un NAT séparé.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>La pile applicative</h2>
+    <p>
+      GLPI est une application web en PHP qui s'appuie sur une base de
+      données relationnelle. La pile classique pour ça c'est LAMP : Linux,
+      Apache, MariaDB, PHP. C'est la pile la plus utilisée au monde pour les
+      applications web, donc le choix le plus logique.
+    </p>
+    <figure>
+      <img src="img/glpi-033.png" alt="Schéma de la pile applicative">
+      <figcaption>Schéma 2 — Pile applicative LAMP + GLPI</figcaption>
+    </figure>
+    <ul class="puces">
+      <li><b>Ubuntu Server 24.04 LTS</b> pour la stabilité (supportée jusqu'en 2029)</li>
+      <li><b>Apache 2.4</b> parce que GLPI fournit un <code>.htaccess</code> prêt à l'emploi</li>
+      <li><b>MariaDB 11</b> qui est inclus dans Ubuntu et 100 % libre</li>
+      <li><b>PHP 8.3</b> environ 25 % plus rapide que PHP 7.4</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>L'installation</h2>
+    <p>
+      J'ai d'abord installé la VM Ubuntu Server avec Subiquity, en config
+      classique : LVM, OpenSSH, hostname <code>srv-glpi</code>, IP statique
+      <code>192.168.56.10/24</code> sur l'interface host-only.
+    </p>
+    <p>
+      Pour gagner du temps et garantir un résultat reproductible, j'ai
+      écrit un script <code>02_install_lamp_glpi.sh</code> qui automatise
+      tout : installation d'Apache, sécurisation de MariaDB, création de la
+      base et de l'utilisateur GLPI avec le principe du moindre privilège,
+      installation de PHP 8.3 avec toutes les extensions requises,
+      téléchargement de GLPI 10, configuration du VirtualHost et des
+      permissions.
+    </p>
+    <figure>
+      <img src="img/glpi-039.png" alt="Capture d'écran de l'installation">
+      <figcaption>Le script d'installation en cours d'exécution</figcaption>
+    </figure>
+    <p>
+      L'assistant web GLPI prend ensuite le relais en 8 étapes. À la fin,
+      l'application est accessible sur <code>https://glpi.alconseil.local</code>.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Le bonus : Active Directory + LDAP</h2>
+    <p>
+      Dans une entreprise, on ne crée pas un compte GLPI <i>en plus</i> du
+      compte Windows de chaque utilisateur. On réutilise le compte du
+      domaine. Pour simuler ça sans licence Windows Server, j'ai monté un
+      Active Directory avec Samba 4 sur la deuxième VM.
+    </p>
+    <p>
+      Samba 4 en mode AD-DC fonctionne exactement comme un AD Microsoft :
+      même protocoles (LDAP, Kerberos, DNS, SMB), mêmes outils côté client.
+      J'ai ensuite configuré l'authentification LDAP dans GLPI pour
+      qu'il interroge l'AD à chaque connexion.
+    </p>
+    <figure>
+      <img src="img/glpi-029.png" alt="Configuration LDAP dans GLPI">
+      <figcaption>Configuration de la liaison LDAP dans GLPI</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>La sécurisation</h2>
+    <p>
+      Un serveur en réseau, même en laboratoire, ça se sécurise dès la
+      première minute. Voici ce que j'ai mis en place :
+    </p>
+    <ul class="puces">
+      <li><b>UFW</b> en pare-feu, par défaut tout est bloqué sauf SSH, HTTP et HTTPS</li>
+      <li><b>Fail2ban</b> pour bloquer les IP qui font du brute-force sur SSH</li>
+      <li><b>HTTPS</b> avec certificat auto-signé (en prod ce serait Let's Encrypt)</li>
+      <li><b>Permissions strictes</b> sur <code>/var/www/glpi</code></li>
+      <li><b>Sécurisation des chemins</b> GLPI : <code>files/</code> et <code>config/</code> hors du DocumentRoot</li>
+      <li><b>Sauvegardes automatiques</b> tous les jours via cron : dump de la base et tar du dossier GLPI</li>
+    </ul>
+  </section>
+
+
+  <section class="bloc-projet">
+    <h2>Ce que ça m'a appris</h2>
+    <p>
+      Ce projet, c'est probablement celui qui m'a le plus fait progresser.
+      D'abord parce que c'est la première fois que je suis allé jusqu'au
+      bout d'un déploiement complet, du choix de la stack à la
+      sauvegarde, en passant par la doc.
+    </p>
+    <p>
+      Ensuite parce que j'ai dû expliquer mes choix techniques à mon
+      tuteur. Comprendre pourquoi MariaDB plutôt que PostgreSQL, pourquoi
+      Apache plutôt que Nginx, pourquoi Ubuntu plutôt que Debian. C'est ce
+      qui distingue un technicien d'un simple exécutant.
+    </p>
+    <p>
+      Enfin, j'ai vraiment vu l'intérêt d'écrire des scripts shell pour
+      automatiser. Le jour où il faudra redéployer en prod, tout est prêt.
+    </p>
+  </section>
+
+
+  <section class="bloc-projet livrables">
+    <h2>Livrables</h2>
+    <ul class="puces">
+      <li>Une VM opérationnelle avec GLPI accessible depuis le navigateur</li>
+      <li>Un rapport documentant l'intégralité du déploiement (50 pages)</li>
+      <li>Les scripts shell d'automatisation pour redéployer rapidement</li>
+      <li>Les captures d'écran prouvant le bon fonctionnement de chaque étape</li>
+    </ul>
+    <a class="voir-projet" href="Rapport_GLPI.pdf" target="_blank">Lire le rapport complet (PDF) →</a>
+  </section>
+
+</article>
+
+
+<footer>
+  <p class="copy">© 2026 Chiderson Laurenard.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
